@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#4d44e3","on-error":"#ffffff","on-surface":"#0b1c30","inverse-on-surface":"#eaf1ff","on-secondary-fixed":"#131b2e","primary-fixed":"#e2dfff","surface-dim":"#cbdbf5","background":"#f8f9ff","error-container":"#ffdad6","inverse-surface":"#213145","outline-variant":"#c7c4d8","error":"#ba1a1a","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","surface-container-highest":"#d3e4fe","tertiary-fixed-dim":"#c0c1ff","tertiary":"#3130c0","surface-container":"#e5eeff","on-tertiary-container":"#d9d8ff","on-primary-fixed-variant":"#3323cc","primary":"#3525cd","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","on-primary-fixed":"#0f0069","secondary-fixed-dim":"#bec6e0","on-background":"#0b1c30","inverse-primary":"#c3c0ff","on-error-container":"#93000a","on-tertiary-fixed":"#07006c","tertiary-container":"#4b4dd8","on-secondary-container":"#5c647a","tertiary-fixed":"#e1e0ff","on-tertiary":"#ffffff","outline":"#777587","surface":"#f8f9ff","on-tertiary-fixed-variant":"#2f2ebe","on-primary":"#ffffff","surface-container-low":"#eff4ff","primary-container":"#4f46e5","secondary":"#565e74","on-secondary":"#ffffff","surface-variant":"#d3e4fe","on-secondary-fixed-variant":"#3f465c","secondary-container":"#dae2fd","secondary-fixed":"#dae2fd","primary-fixed-dim":"#c3c0ff","on-primary-container":"#dad7ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","space-md":"1rem","margin-lg":"2rem","margin":"1rem","space-xl":"2rem","space-sm":"0.5rem","gutter":"1rem","margin-md":"1.5rem","gutter-lg":"1.5rem","space-xs":"0.25rem"},fontFamily:{"headline-md":["Plus Jakarta Sans"],"body-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"code-sm":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-lg":["Inter"],"display-lg":["Plus Jakarta Sans"],"label-sm":["Inter"],"label-xs":["Inter"]},fontSize:{"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"label-md":["13px",{lineHeight:"18px",letterSpacing:"0.01em",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"code-sm":["12px",{lineHeight:"16px",letterSpacing:"0em",fontWeight:"500"}],"display-lg-mobile":["26px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"display-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.03em",fontWeight:"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-28 flex flex-col justify-between"><div class="h-16 w-full px-margin-lg flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm"><span class="material-symbols-outlined text-headline-sm">confirmation_number</span></div><span class="font-headline-sm text-headline-sm text-on-surface">PulseDesk</span></div><span class="px-space-sm py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs">Support Portal</span></div><div class="flex-1 max-w-xl mx-auto hidden md:block"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-secondary text-body-lg pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-secondary font-body-sm text-body-sm shadow-[0_1px_3px_rgba(15,23,42,0.04)] focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search tickets, customers, or tags... (Press ⌘K)" type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.03)]"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="font-label-xs text-label-xs text-secondary">System Operational</span></div><button class="relative p-space-sm rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-body-lg">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight">Sarah Chen</p><p class="font-label-xs text-label-xs text-secondary leading-tight">Senior Support Specialist</p></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1UH50e3e1DS5pPHZmk0aniCyyBbl0hqM6NxVH3o-u_ykSar4yLXqQGXh6q69W5Yb533HyERjXraSE82fdC0EtwWkc_Ao4qMuJ7ri-1gXDx0J0bTwzxui_K2UMWx1dlma313zToKHvMY2lWcpxR99Y7U665xjdjSM_f4VTWqAbmRo6Jc_8-Jr5oHdQ4YP_ZQbTmbDtCd6NOPB-xTb2raULY0lkgb48rI3U_jZtJK0Sna1Xxp9snbpzmMpak"/></div></div></div><div class="h-12 w-full px-margin-lg flex items-center justify-between bg-surface-container-lowest"><nav class="flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a aria-current="page" class="px-space-md py-1.5 transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="all-tickets" href="#">All Tickets</a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-space-xs" data-path="needs-attention" href="#"><span>Needs Attention</span><span class="px-1.5 py-0.2 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-bold">3</span></a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="analytics-preview" href="#">Analytics Preview</a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="settings" href="#">Settings</a></nav><div class="hidden md:flex items-center gap-space-xs font-label-xs text-label-xs text-secondary"><span class="hover:text-on-surface cursor-pointer">Workspace</span><span class="material-symbols-outlined text-code-sm">chevron_right</span><span class="hover:text-on-surface cursor-pointer">Customer Operations</span><span class="material-symbols-outlined text-code-sm">chevron_right</span><span class="text-on-surface font-semibold">Queue</span></div></div></div></header><main class="w-full pt-28 bg-background min-h-[calc(100vh-4rem)]"><div class="w-full px-margin-lg py-margin-md max-w-7xl mx-auto"><div class="flex flex-col w-full">
+<div class="flex flex-col gap-space-lg w-full">
+<!-- Top System Alert Banner (PRD Section 9 & 10: API Network Error Recovery) -->
+<div class="w-full bg-error-container text-on-error-container rounded-xl p-space-md shadow-sm transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md" id="error-recovery-banner">
+<div class="flex items-start md:items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-error text-on-error flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-headline-sm">wifi_off</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm font-semibold">Connection Timeout Encountered</span>
+<span class="px-2 py-0.5 rounded-full bg-error text-on-error font-code-sm text-code-sm uppercase tracking-wider">HTTP 504</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container/90 mt-0.5">
+            Unable to fetch pagination chunk from <code class="bg-black/10 px-1.5 py-0.5 rounded font-code-sm text-code-sm font-semibold">/api/tickets?page=2</code>. Upstream gateway timed out after 10,000ms.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end md:self-auto shrink-0">
+<button class="px-space-md py-2 rounded-lg bg-error text-on-error hover:bg-error/90 active:scale-95 transition-all font-label-md text-label-md flex items-center gap-space-xs shadow-sm" id="retry-query-btn">
+<span class="material-symbols-outlined text-body-md transition-transform duration-500" id="retry-icon">sync</span>
+<span>Retry Query</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-black/10 text-on-error-container transition-colors" onclick="document.getElementById('error-recovery-banner').style.display='none'">
+<span class="material-symbols-outlined text-body-lg">close</span>
+</button>
+</div>
+</div>
+<!-- Active Search Filter Workspace Bar -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search bar with active unmatched token -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary text-body-lg pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-28 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm shadow-inner focus:outline-none focus:bg-surface-container-lowest transition-all" id="ticket-search-input" type="text" value="query=unmatched_ticket_keyword_9999"/>
+<div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-sm text-code-sm">No hits</span>
+<button class="p-1 rounded text-secondary hover:text-on-surface transition-colors" onclick="clearSearch()" title="Clear query">
+<span class="material-symbols-outlined text-body-sm">cancel</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips & Status Indicators -->
+<div class="flex flex-wrap items-center gap-space-xs sm:gap-space-sm">
+<!-- Status active chip -->
+<div class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span class="font-normal text-secondary">Status:</span>
+<span class="font-semibold text-on-surface">Resolved</span>
+<button class="ml-1 text-secondary hover:text-on-surface flex items-center" onclick="clearFilter('status')">
+<span class="material-symbols-outlined text-label-sm">close</span>
+</button>
+</div>
+<!-- Priority filter (empty) -->
+<div class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-low text-secondary font-label-sm text-label-sm hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-label-sm">flag</span>
+<span>Priority: All</span>
+<span class="material-symbols-outlined text-label-xs">expand_more</span>
+</div>
+<!-- Assignee Filter (empty) -->
+<div class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-low text-secondary font-label-sm text-label-sm hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-label-sm">person</span>
+<span>Assignee: Any</span>
+<span class="material-symbols-outlined text-label-xs">expand_more</span>
+</div>
+<div class="h-6 w-px bg-surface-container-high hidden sm:block mx-1"></div>
+<!-- Master Reset CTA -->
+<button class="px-3 py-1.5 rounded-lg bg-primary-fixed text-on-primary-fixed-variant hover:bg-primary-fixed-dim transition-colors font-label-sm text-label-sm flex items-center gap-1 font-semibold" onclick="resetAllFilters()">
+<span class="material-symbols-outlined text-label-sm">filter_alt_off</span>
+<span>Reset (2 active)</span>
+</button>
+</div>
+</div>
+<!-- Secondary Query Meta bar -->
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary pt-1">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center gap-1 text-error font-medium">
+<span class="material-symbols-outlined text-label-xs">info</span>
+<span>0 matches found across primary partitions</span>
+</span>
+<span>•</span>
+<span>Indexed records: 38</span>
+<span>•</span>
+<span>Query latency: 42ms</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs">
+<span>Sort:</span>
+<span class="font-semibold text-on-surface">Last Updated (Desc)</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Metric Baseline KPI Cards (FR-08 / AC-09 Compliance) -->
+<!-- KPI counts MUST represent the entire dataset, independent of active search queries and filters -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-body-sm text-primary">database</span>
+<span class="uppercase tracking-wider font-bold text-on-surface">Global Workspace Dataset Baseline</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-code-sm text-code-sm">FR-08 Static</span>
+</div>
+<span class="font-label-xs text-label-xs text-secondary italic">KPI counts remain invariant to active filters</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1: Total Baseline -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md">Total Dataset</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-body-md">inbox</span>
+</div>
+</div>
+<div class="my-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">38</span>
+<span class="font-label-xs text-label-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold">+100% corpus</span>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-xs text-label-xs pt-1">
+<span>All system partitions</span>
+<span class="font-code-sm text-code-sm font-medium">100% SLA target</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-primary/20"></div>
+</div>
+<!-- KPI 2: Open Tickets Baseline -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md">Open Tickets</span>
+<div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-md">schedule</span>
+</div>
+</div>
+<div class="my-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">14</span>
+<span class="font-label-xs text-label-xs text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full font-semibold">36.8% volume</span>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-xs text-label-xs pt-1">
+<span>Awaiting initial response</span>
+<span class="text-error font-medium">4 urgent</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-400"></div>
+</div>
+<!-- KPI 3: In Progress Baseline -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md">In Progress</span>
+<div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-md">hourglass_top</span>
+</div>
+</div>
+<div class="my-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">9</span>
+<span class="font-label-xs text-label-xs text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full font-semibold">23.7% volume</span>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-xs text-label-xs pt-1">
+<span>Assigned to 6 agents</span>
+<span class="font-medium text-secondary">Avg 1.8h active</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
+</div>
+<!-- KPI 4: Resolved Baseline -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md">Resolved</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-md">task_alt</span>
+</div>
+</div>
+<div class="my-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">15</span>
+<span class="font-label-xs text-label-xs text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold">39.5% volume</span>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-xs text-label-xs pt-1">
+<span>Closed this sprint</span>
+<span class="text-emerald-700 font-semibold">98.2% CSAT</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+</div>
+</div>
+</div>
+<!-- Main Content Dual-Panel Layout: Empty State View & System Diagnostics Preview -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg w-full items-start">
+<!-- Primary Empty Search & Filter State Canvas (Col 8) -->
+<div class="xl:col-span-8 flex flex-col bg-surface-container-lowest rounded-2xl p-space-lg sm:p-space-xl shadow-sm min-h-[460px] justify-center items-center text-center relative overflow-hidden">
+<!-- Ambient radial backdrop aura -->
+<div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-primary-fixed/30 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-surface-container-high/60 blur-3xl pointer-events-none"></div>
+<!-- Visual Centerpiece: Illustrated Search Orb with layered rings -->
+<div class="relative mb-space-lg flex items-center justify-center">
+<div class="w-24 h-24 rounded-full bg-surface-container-high/80 flex items-center justify-center shadow-inner">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-display-lg text-secondary">manage_search</span>
+</div>
+</div>
+<!-- Ping marker indicative of query scans completed -->
+<div class="absolute top-1 right-1 w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-xs shadow-sm">
+            0
+          </div>
+</div>
+<!-- Informational Typography -->
+<div class="max-w-lg mx-auto flex flex-col items-center">
+<div class="flex items-center gap-space-xs mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-secondary font-label-xs text-label-xs uppercase tracking-wider font-semibold">
+              Filter Pipeline Unmatched
+            </span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight mb-space-sm">
+            No matching tickets found
+          </h2>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-space-md">
+            No tickets matched your search query <code class="text-on-surface bg-surface-container px-2 py-0.5 rounded font-code-sm text-code-sm font-semibold">unmatched_ticket_keyword_9999</code> and status criterion <strong class="text-on-surface">Resolved</strong>.
+          </p>
+<div class="p-space-sm bg-surface-container-low rounded-lg w-full max-w-md text-left mb-space-lg">
+<p class="font-label-xs text-label-xs text-on-surface font-semibold mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-label-sm text-secondary">tips_and_updates</span>
+              Troubleshooting suggestions:
+            </p>
+<ul class="font-body-sm text-body-sm text-secondary list-disc pl-5 space-y-0.5">
+<li>Check your search term for typos or syntax flags.</li>
+<li>Clear the <span class="font-medium text-on-surface">Status: Resolved</span> filter to scan all 38 baseline records.</li>
+<li>Search by customer email address or raw numeric ID (e.g. #TK-402).</li>
+</ul>
+</div>
+<!-- Dual Recovery CTAs -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center">
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary-container/90 active:scale-95 transition-all font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs shadow-md" onclick="resetAllFilters()">
+<span class="material-symbols-outlined text-body-md">filter_alt_off</span>
+<span>Clear All Filters &amp; Reset</span>
+</button>
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-all font-label-md text-label-md font-medium flex items-center justify-center gap-space-xs" onclick="simulateNewTicketModal()">
+<span class="material-symbols-outlined text-body-md">add_circle</span>
+<span>Create New Ticket</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Panel: Diagnostics, Skeleton Visualizer & Fallback Protocols (Col 4) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md w-full">
+<!-- Live Skeleton Simulator Component (PRD Section 9 Compliance) -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-body-md text-primary">view_timeline</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Loading State Specs</span>
+</div>
+<button class="px-2 py-1 rounded bg-surface-container text-on-surface font-label-xs text-label-xs hover:bg-surface-container-high transition-colors" id="toggle-skeleton-btn" onclick="toggleSkeletonAnimation()">
+              Pause Shimmer
+            </button>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+            PRD Section 9 UI loading pattern. Displays while the query engine processes complex boolean AST queries.
+          </p>
+<!-- Simulated Table Skeleton Shimmer Frame -->
+<div class="w-full bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-2.5 overflow-hidden relative" id="skeleton-container">
+<div class="flex items-center justify-between pb-1 border-b-0">
+<div class="h-3 w-16 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-3 w-12 bg-surface-container-high rounded animate-pulse"></div>
+</div>
+<!-- Row 1 Skeleton -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 flex-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high animate-pulse shrink-0"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="h-3 w-3/4 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-2.5 w-1/2 bg-surface-container rounded animate-pulse"></div>
+</div>
+</div>
+<div class="h-5 w-14 bg-surface-container-high rounded-full animate-pulse shrink-0"></div>
+</div>
+<!-- Row 2 Skeleton -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 flex-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high animate-pulse shrink-0"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="h-3 w-2/3 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-2.5 w-1/3 bg-surface-container rounded animate-pulse"></div>
+</div>
+</div>
+<div class="h-5 w-14 bg-surface-container-high rounded-full animate-pulse shrink-0"></div>
+</div>
+<!-- Row 3 Skeleton -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 flex-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high animate-pulse shrink-0"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="h-3 w-4/5 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-2.5 w-2/5 bg-surface-container rounded animate-pulse"></div>
+</div>
+</div>
+<div class="h-5 w-14 bg-surface-container-high rounded-full animate-pulse shrink-0"></div>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-xs text-label-xs text-secondary pt-1">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+              Synchronized 1.2s pulse loop
+            </span>
+<span>44px Row Height</span>
+</div>
+</div>
+<!-- Section 10 API Health & Error Protocol Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-body-md text-secondary">dns</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Data Ingestion Health</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-label-xs text-label-xs font-semibold">Degraded v2.4</span>
+</div>
+<div class="space-y-2 mt-1">
+<div class="flex items-center justify-between text-body-sm text-body-sm p-2 rounded-lg bg-surface-container-low">
+<span class="text-secondary font-medium">Index Cluster (EU-Central)</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Normal
+              </span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm p-2 rounded-lg bg-surface-container-low">
+<span class="text-secondary font-medium">Pagination Streamer</span>
+<span class="text-error font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Timeout 504
+              </span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm p-2 rounded-lg bg-surface-container-low">
+<span class="text-secondary font-medium">Search Inverted Index</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Operational
+              </span>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between">
+<button class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1" onclick="triggerSimulatedSuccess()">
+<span class="material-symbols-outlined text-body-sm">check_circle</span>
+<span>Test mock API success</span>
+</button>
+<span class="font-code-sm text-code-sm text-secondary">RTT: 1420ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Filter Inspection Toast / Floating Feedback -->
+<div class="fixed bottom-6 right-6 z-40 bg-inverse-surface text-inverse-on-surface p-space-md rounded-xl shadow-xl flex items-center gap-space-md max-w-md border-0 transition-transform duration-300" id="filter-toast">
+<div class="w-8 h-8 rounded-lg bg-inverse-primary text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-body-md">filter_alt</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-label-sm text-label-sm font-semibold truncate">Unmatched Query State Pinned</span>
+<span class="font-body-sm text-body-sm opacity-80 truncate">Showing 0 of 38 dataset items</span>
+</div>
+<button class="text-inverse-on-surface/70 hover:text-inverse-on-surface" onclick="document.getElementById('filter-toast').classList.add('translate-y-28')">
+<span class="material-symbols-outlined text-body-sm">close</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  function resetAllFilters() {
+    const input = document.getElementById('ticket-search-input');
+    if (input) input.value = '';
+    
+    // Quick user feedback
+    const toast = document.getElementById('filter-toast');
+    if (toast) {
+      toast.querySelector('.font-label-sm').textContent = 'Filters reset to default view';
+      toast.querySelector('.font-body-sm').textContent = 'Reloading 38 tickets into view...';
+      toast.classList.remove('translate-y-28');
+      setTimeout(() => {
+        toast.classList.add('translate-y-28');
+      }, 3500);
+    }
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('ticket-search-input');
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  function clearFilter(filterType) {
+    const toast = document.getElementById('filter-toast');
+    if (toast) {
+      toast.querySelector('.font-label-sm').textContent = 'Filter cleared: ' + filterType;
+      toast.querySelector('.font-body-sm').textContent = 'Re-evaluating remaining search predicates...';
+      toast.classList.remove('translate-y-28');
+      setTimeout(() => {
+        toast.classList.add('translate-y-28');
+      }, 2500);
+    }
+  }
+
+  function simulateNewTicketModal() {
+    alert('Create Ticket dialogue initiated. Workspace remains context-aware.');
+  }
+
+  // Interactive Retry action with rotation feedback
+  const retryBtn = document.getElementById('retry-query-btn');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', function() {
+      const icon = document.getElementById('retry-icon');
+      if (icon) {
+        icon.classList.add('rotate-180');
+        setTimeout(() => icon.classList.remove('rotate-180'), 600);
+      }
+      this.innerHTML = '<span class="material-symbols-outlined text-body-md animate-spin">refresh</span><span>Retrying /api/tickets...</span>';
+      setTimeout(() => {
+        this.innerHTML = '<span class="material-symbols-outlined text-body-md">check</span><span>Reconnected</span>';
+        this.classList.remove('bg-error');
+        this.classList.add('bg-emerald-600');
+        setTimeout(() => {
+          document.getElementById('error-recovery-banner').style.display = 'none';
+        }, 1200);
+      }, 1500);
+    });
+  }
+
+  let isShimmering = true;
+  function toggleSkeletonAnimation() {
+    const skeleton = document.getElementById('skeleton-container');
+    const btn = document.getElementById('toggle-skeleton-btn');
+    if (!skeleton || !btn) return;
+    
+    const pulsers = skeleton.querySelectorAll('.animate-pulse');
+    if (isShimmering) {
+      pulsers.forEach(el => el.classList.remove('animate-pulse'));
+      btn.textContent = 'Resume Shimmer';
+      isShimmering = false;
+    } else {
+      pulsers.forEach(el => el.classList.add('animate-pulse'));
+      btn.textContent = 'Pause Shimmer';
+      isShimmering = true;
+    }
+  }
+
+  function triggerSimulatedSuccess() {
+    const banner = document.getElementById('error-recovery-banner');
+    if (banner) {
+      banner.style.display = 'flex';
+      banner.className = 'w-full bg-emerald-100 text-emerald-900 rounded-xl p-space-md shadow-sm transition-all flex flex-col md:flex-row items-center justify-between gap-space-md';
+      banner.innerHTML = `
+        <div class="flex items-center gap-space-md">
+          <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-headline-sm">check_circle</span>
+          </div>
+          <div>
+            <p class="font-headline-sm text-headline-sm font-semibold">Mock Health Restored</p>
+            <p class="font-body-sm text-body-sm text-emerald-800">All 38 tickets re-indexed. Telemetry stream acknowledged.</p>
+          </div>
+        </div>
+        <button onclick="this.parentElement.style.display='none'" class="px-3 py-1.5 rounded-lg bg-emerald-800 text-white font-label-sm text-label-sm">Dismiss</button>
+      `;
+    }
+  }
+</script></div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.02)]"><div class="w-full max-w-7xl mx-auto px-margin-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md font-label-sm text-label-sm text-secondary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>API v2.4 (Operational)</span></div><span class="hidden sm:inline text-outline-variant">•</span><a class="hover:text-primary transition-colors flex items-center gap-space-xs" href="#"><span class="material-symbols-outlined text-code-sm">menu_book</span>Documentation</a></div><div class="flex items-center gap-space-md font-label-xs text-label-xs text-secondary"><span>PulseDesk Operations Engine</span><span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-code-sm text-code-sm">v1.0.0</span></div></div></footer></body></html>

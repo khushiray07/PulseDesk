@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pulsedesk
+      POSTGRES_PASSWORD: pulsedesk
+      POSTGRES_DB: pulsedesk
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - pulsedesk_data:/var/lib/postgresql/data
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pulsedesk -d pulsedesk"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+volumes:
+  pulsedesk_data:

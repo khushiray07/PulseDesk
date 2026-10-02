@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#4d44e3","on-error":"#ffffff","on-surface":"#0b1c30","inverse-on-surface":"#eaf1ff","on-secondary-fixed":"#131b2e","primary-fixed":"#e2dfff","surface-dim":"#cbdbf5","background":"#f8f9ff","error-container":"#ffdad6","inverse-surface":"#213145","outline-variant":"#c7c4d8","error":"#ba1a1a","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","surface-container-highest":"#d3e4fe","tertiary-fixed-dim":"#c0c1ff","tertiary":"#3130c0","surface-container":"#e5eeff","on-tertiary-container":"#d9d8ff","on-primary-fixed-variant":"#3323cc","primary":"#3525cd","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","on-primary-fixed":"#0f0069","secondary-fixed-dim":"#bec6e0","on-background":"#0b1c30","inverse-primary":"#c3c0ff","on-error-container":"#93000a","on-tertiary-fixed":"#07006c","tertiary-container":"#4b4dd8","on-secondary-container":"#5c647a","tertiary-fixed":"#e1e0ff","on-tertiary":"#ffffff","outline":"#777587","surface":"#f8f9ff","on-tertiary-fixed-variant":"#2f2ebe","on-primary":"#ffffff","surface-container-low":"#eff4ff","primary-container":"#4f46e5","secondary":"#565e74","on-secondary":"#ffffff","surface-variant":"#d3e4fe","on-secondary-fixed-variant":"#3f465c","secondary-container":"#dae2fd","secondary-fixed":"#dae2fd","primary-fixed-dim":"#c3c0ff","on-primary-container":"#dad7ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","space-md":"1rem","margin-lg":"2rem","margin":"1rem","space-xl":"2rem","space-sm":"0.5rem","gutter":"1rem","margin-md":"1.5rem","gutter-lg":"1.5rem","space-xs":"0.25rem"},fontFamily:{"headline-md":["Plus Jakarta Sans"],"body-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"code-sm":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-lg":["Inter"],"display-lg":["Plus Jakarta Sans"],"label-sm":["Inter"],"label-xs":["Inter"]},fontSize:{"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"label-md":["13px",{lineHeight:"18px",letterSpacing:"0.01em",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"code-sm":["12px",{lineHeight:"16px",letterSpacing:"0em",fontWeight:"500"}],"display-lg-mobile":["26px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"display-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"700"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.03em",fontWeight:"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-28 flex flex-col justify-between"><div class="h-16 w-full px-margin-lg flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm"><span class="material-symbols-outlined text-headline-sm">confirmation_number</span></div><span class="font-headline-sm text-headline-sm text-on-surface">PulseDesk</span></div><span class="px-space-sm py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs">Support Portal</span></div><div class="flex-1 max-w-xl mx-auto hidden md:block"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-secondary text-body-lg pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-secondary font-body-sm text-body-sm shadow-[0_1px_3px_rgba(15,23,42,0.04)] focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search tickets, customers, or tags... (Press ⌘K)" type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-lowest shadow-[0_1px_2px_rgba(15,23,42,0.03)]"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="font-label-xs text-label-xs text-secondary">System Operational</span></div><button class="relative p-space-sm rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-body-lg">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight">Sarah Chen</p><p class="font-label-xs text-label-xs text-secondary leading-tight">Senior Support Specialist</p></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1UH50e3e1DS5pPHZmk0aniCyyBbl0hqM6NxVH3o-u_ykSar4yLXqQGXh6q69W5Yb533HyERjXraSE82fdC0EtwWkc_Ao4qMuJ7ri-1gXDx0J0bTwzxui_K2UMWx1dlma313zToKHvMY2lWcpxR99Y7U665xjdjSM_f4VTWqAbmRo6Jc_8-Jr5oHdQ4YP_ZQbTmbDtCd6NOPB-xTb2raULY0lkgb48rI3U_jZtJK0Sna1Xxp9snbpzmMpak"/></div></div></div><div class="h-12 w-full px-margin-lg flex items-center justify-between bg-surface-container-lowest"><nav class="flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a aria-current="page" class="px-space-md py-1.5 transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="all-tickets" href="#">All Tickets</a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-space-xs" data-path="needs-attention" href="#"><span>Needs Attention</span><span class="px-1.5 py-0.2 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-bold">3</span></a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="analytics-preview" href="#">Analytics Preview</a><a class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="settings" href="#">Settings</a></nav><div class="hidden md:flex items-center gap-space-xs font-label-xs text-label-xs text-secondary"><span class="hover:text-on-surface cursor-pointer">Workspace</span><span class="material-symbols-outlined text-code-sm">chevron_right</span><span class="hover:text-on-surface cursor-pointer">Customer Operations</span><span class="material-symbols-outlined text-code-sm">chevron_right</span><span class="text-on-surface font-semibold">Queue</span></div></div></div></header><main class="w-full pt-28 bg-background min-h-[calc(100vh-4rem)]"><div class="w-full px-margin-lg py-margin-md max-w-7xl mx-auto"><div class="flex flex-col w-full">
+<!-- Interactive View State Controller -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm bg-surface-container-lowest p-space-sm rounded-xl shadow-sm mb-space-lg">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-primary text-body-lg">tune</span>
+<span class="font-semibold text-on-surface">Interactive Prototype Controls:</span>
+<span class="text-secondary hidden md:inline">Preview key interface states from PulseDesk PRD:</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 p-1 bg-surface-container-low rounded-lg">
+<button class="px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold bg-primary text-on-primary shadow-sm transition-all" id="btn-view-normal" onclick="setViewState('normal')" type="button">Normal Table</button>
+<button class="px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold text-on-surface-variant hover:text-on-surface transition-all" id="btn-view-drawer" onclick="setViewState('drawer')" type="button">Ticket Drawer / Inspector</button>
+<button class="px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold text-on-surface-variant hover:text-on-surface transition-all" id="btn-view-modal" onclick="setViewState('modal')" type="button">+ Create Ticket Modal</button>
+<button class="px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold text-on-surface-variant hover:text-on-surface transition-all" id="btn-view-empty" onclick="setViewState('empty')" type="button">Zero State (Empty)</button>
+<button class="px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold text-on-surface-variant hover:text-on-surface transition-all" id="btn-view-loading" onclick="setViewState('loading')" type="button">Loading Skeletons</button>
+</div>
+</div>
+<!-- SECTION 1: Top Action Bar & Header -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-xl">
+<div>
+<div class="flex items-center gap-space-xs mb-1">
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Support Ticket Overview</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs bg-primary-fixed text-on-primary-fixed font-bold tracking-wide">LIVE QUEUE</span>
+</div>
+<p class="font-body-md text-body-md text-secondary">Track, filter, and resolve incoming customer inquiries in real time across SLA milestones.</p>
+</div>
+<div class="flex items-center gap-space-sm self-start lg:self-auto">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md shadow-sm transition-all active:scale-[0.98]" onclick="triggerExportToast()" type="button">
+<span class="material-symbols-outlined text-body-lg text-secondary">download</span>
+<span>Export CSV</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-tertiary text-on-primary font-label-md text-label-md shadow-md shadow-primary/20 transition-all active:scale-[0.98]" onclick="openCreateModal()" type="button">
+<span class="material-symbols-outlined text-body-lg">add</span>
+<span>Create Ticket</span>
+</button>
+</div>
+</div>
+<!-- SECTION 2: Unfiltered Summary Metric KPI Cards -->
+<div class="flex flex-col gap-space-xs mb-space-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1: Total -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-all group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary">Total Tickets</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary group-hover:bg-primary-fixed group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-body-lg">folder_open</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-display-lg text-display-lg text-on-surface">38</span>
+<span class="font-label-xs text-label-xs text-secondary font-medium">all-time dataset</span>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary pt-2">
+<span>Across all statuses</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface-variant">100% indexed</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-surface-container-high"></div>
+</div>
+<!-- KPI 2: Open -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-all group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary">Open Tickets</span>
+<div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">notifications_active</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-display-lg text-display-lg text-on-surface">14</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-label-xs font-label-xs bg-amber-100 text-amber-800 font-semibold">+3 today</span>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary pt-2">
+<span>Awaiting agent action</span>
+<span class="font-semibold text-amber-700">36.8% queue</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-400"></div>
+</div>
+<!-- KPI 3: In Progress -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-all group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary">In Progress</span>
+<div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">pending_actions</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-display-lg text-display-lg text-on-surface">9</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-label-xs font-label-xs bg-blue-100 text-blue-800 font-semibold">Active</span>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary pt-2">
+<span>Currently under review</span>
+<span class="font-semibold text-blue-700">Avg 42m MTTR</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-primary-container"></div>
+</div>
+<!-- KPI 4: Resolved -->
+<div class="relative overflow-hidden bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-all group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-secondary">Resolved</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">task_alt</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-display-lg text-display-lg text-on-surface">15</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-label-xs font-label-xs bg-emerald-100 text-emerald-800 font-semibold">98.2% CSAT</span>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary pt-2">
+<span>39.5% completion rate</span>
+<span class="font-semibold text-emerald-700 font-code-sm text-code-sm">+6 this week</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+</div>
+</div>
+<!-- Helper pill note (PRD Section 5 FR-08) -->
+<div class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-xs text-label-xs self-start mt-1">
+<span class="material-symbols-outlined text-body-sm text-secondary">info</span>
+<span>KPI counts represent the full dataset and remain independent of active list filters.</span>
+</div>
+</div>
+<!-- SECTION 3: Search & Filter Toolbar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none text-body-lg">search</span>
+<input class="w-full h-10 pl-10 pr-24 rounded-lg bg-surface-container-low text-on-surface placeholder:text-secondary font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all" id="search-input" oninput="handleSearch(this.value)" placeholder="Search by issue title or customer email..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-secondary font-code-sm text-code-sm">⌘K</span>
+</div>
+</div>
+<!-- Filter Controls Group -->
+<div class="flex flex-wrap items-center gap-space-xs sm:gap-space-sm">
+<!-- Status Dropdown -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20" id="filter-status" onchange="applyFilters()">
+<option value="ALL">Status: All Statuses</option>
+<option value="OPEN">Status: Open</option>
+<option value="IN_PROGRESS">Status: In Progress</option>
+<option value="RESOLVED">Status: Resolved</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none text-body-md">arrow_drop_down</span>
+</div>
+<!-- Priority Dropdown -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20" id="filter-priority" onchange="applyFilters()">
+<option value="ALL">Priority: All Priorities</option>
+<option value="HIGH">Priority: High</option>
+<option value="MEDIUM">Priority: Medium</option>
+<option value="LOW">Priority: Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none text-body-md">arrow_drop_down</span>
+</div>
+<!-- Sort Dropdown -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20" id="sort-tickets" onchange="applyFilters()">
+<option value="newest">Sort by: Newest First</option>
+<option value="oldest">Sort by: Oldest First</option>
+<option value="priority">Sort by: Priority (High to Low)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary pointer-events-none text-body-md">swap_vert</span>
+</div>
+<!-- Quick Reset -->
+<button class="h-10 px-3 rounded-lg hover:bg-surface-container-high text-secondary hover:text-on-surface font-label-xs text-label-xs transition-colors flex items-center gap-1" onclick="clearAllFilters()" title="Reset all filters" type="button">
+<span class="material-symbols-outlined text-body-sm">restart_alt</span>
+<span class="hidden sm:inline">Reset</span>
+</button>
+</div>
+</div>
+<!-- Active Filters & Dynamic Result Counter Line -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex flex-wrap items-center gap-2" id="filter-tags-container">
+<span class="text-secondary font-medium">Applied Filters:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-surface" id="tag-status">
+<span>Status: <strong class="font-semibold">All</strong></span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-surface" id="tag-priority">
+<span>Priority: <strong class="font-semibold">All</strong></span>
+</span>
+<button class="text-primary hover:underline font-semibold ml-1" onclick="clearAllFilters()" type="button">Clear Filters</button>
+</div>
+<div class="font-code-sm text-code-sm text-secondary bg-surface-container-low px-2 py-1 rounded">
+        Showing <span class="font-bold text-on-surface" id="counter-shown">7</span> of <span class="font-bold text-on-surface">38</span> tickets (Page 1 of 4)
+      </div>
+</div>
+</div>
+<!-- SECTION 4: Ticket Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-md">
+<!-- TABLE STATE: Normal Data View -->
+<div class="block overflow-x-auto" id="view-normal-table">
+<table class="w-full text-left border-collapse min-w-[900px]">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-label-xs text-label-xs uppercase tracking-wider">
+<th class="py-3 px-space-md font-semibold w-36">Ticket ID</th>
+<th class="py-3 px-space-md font-semibold">Issue Title &amp; Description</th>
+<th class="py-3 px-space-md font-semibold w-56">Customer Email</th>
+<th class="py-3 px-space-md font-semibold w-28 text-center">Priority</th>
+<th class="py-3 px-space-md font-semibold w-32 text-center">Status</th>
+<th class="py-3 px-space-md font-semibold w-36 text-right">Created</th>
+<th class="py-3 px-space-md font-semibold w-28 text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 text-body-sm font-body-sm text-on-surface" id="ticket-table-body">
+<!-- Row 1: TICK-1048 (Needs Attention) -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="marcus.vance@acmecorp.com" data-priority="HIGH" data-status="OPEN" data-title="Payment gateway timeout during checkout flow">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1048', 'Payment gateway timeout during checkout flow', 'marcus.vance@acmecorp.com', 'HIGH', 'OPEN', '18 mins ago', 'High latency spikes observed on Stripe API token authorization webhook during enterprise checkout flow.')">TICK-1048</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded bg-error-container text-on-error-container font-label-xs text-label-xs font-bold animate-pulse">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>Needs Attention
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1048', 'Payment gateway timeout during checkout flow', 'marcus.vance@acmecorp.com', 'HIGH', 'OPEN', '18 mins ago', 'High latency spikes observed on Stripe API token authorization webhook during enterprise checkout flow.')">Payment gateway timeout during checkout flow</p>
+<p class="text-secondary text-body-sm truncate">High latency spikes observed on Stripe API token authorization webhook during checkout.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">M</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">marcus.vance@acmecorp.com</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-rose-50 text-rose-700 font-bold">
+<span class="material-symbols-outlined text-code-sm">keyboard_double_arrow_up</span> HIGH
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-amber-100 text-amber-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Open
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>18 mins ago</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1048', 'Payment gateway timeout during checkout flow', 'marcus.vance@acmecorp.com', 'HIGH', 'OPEN', '18 mins ago', 'High latency spikes observed on Stripe API token authorization webhook during enterprise checkout flow.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 2: TICK-1047 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="elena.rostova@fintechly.io" data-priority="HIGH" data-status="IN_PROGRESS" data-title="SSO login error code 403 on Google OAuth token refresh">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1047', 'SSO login error code 403 on Google OAuth token refresh', 'elena.rostova@fintechly.io', 'HIGH', 'IN_PROGRESS', '1 hour ago', 'Users logging in via Google Workspace receive 403 token expiration without prompt to re-authenticate.')">TICK-1047</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1047', 'SSO login error code 403 on Google OAuth token refresh', 'elena.rostova@fintechly.io', 'HIGH', 'IN_PROGRESS', '1 hour ago', 'Users logging in via Google Workspace receive 403 token expiration without prompt to re-authenticate.')">SSO login error code 403 on Google OAuth token refresh</p>
+<p class="text-secondary text-body-sm truncate">Users logging in via Google Workspace receive 403 token expiration errors.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">E</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">elena.rostova@fintechly.io</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-rose-50 text-rose-700 font-bold">
+<span class="material-symbols-outlined text-code-sm">keyboard_double_arrow_up</span> HIGH
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-blue-100 text-blue-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> In Progress
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>1 hour ago</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1047', 'SSO login error code 403 on Google OAuth token refresh', 'elena.rostova@fintechly.io', 'HIGH', 'IN_PROGRESS', '1 hour ago', 'Users logging in via Google Workspace receive 403 token expiration without prompt to re-authenticate.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 3: TICK-1046 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="david.kim@cloudscale.net" data-priority="MEDIUM" data-status="OPEN" data-title="Unable to update billing credit card in settings tab">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1046', 'Unable to update billing credit card in settings tab', 'david.kim@cloudscale.net', 'MEDIUM', 'OPEN', '3 hours ago', 'Credit card update modal freezes after entering CVC code; does not dispatch API mutation.')">TICK-1046</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1046', 'Unable to update billing credit card in settings tab', 'david.kim@cloudscale.net', 'MEDIUM', 'OPEN', '3 hours ago', 'Credit card update modal freezes after entering CVC code; does not dispatch API mutation.')">Unable to update billing credit card in settings tab</p>
+<p class="text-secondary text-body-sm truncate">Modal freezes after submitting CVC code verification field on dashboard.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">D</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">david.kim@cloudscale.net</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-amber-50 text-amber-700 font-medium">
+<span class="material-symbols-outlined text-code-sm">remove</span> MEDIUM
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-amber-100 text-amber-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Open
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>3 hours ago</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1046', 'Unable to update billing credit card in settings tab', 'david.kim@cloudscale.net', 'MEDIUM', 'OPEN', '3 hours ago', 'Credit card update modal freezes after entering CVC code; does not dispatch API mutation.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 4: TICK-1045 (Needs Attention) -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="sarah.jenkins@healthflow.org" data-priority="HIGH" data-status="OPEN" data-title="Bulk CSV user import failing at row 42 parsing error">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1045', 'Bulk CSV user import failing at row 42 parsing error', 'sarah.jenkins@healthflow.org', 'HIGH', 'OPEN', '4 hours ago', 'Import parser rejects special UTF-8 characters without clear validation message.')">TICK-1045</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded bg-error-container text-on-error-container font-label-xs text-label-xs font-bold animate-pulse">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>Needs Attention
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1045', 'Bulk CSV user import failing at row 42 parsing error', 'sarah.jenkins@healthflow.org', 'HIGH', 'OPEN', '4 hours ago', 'Import parser rejects special UTF-8 characters without clear validation message.')">Bulk CSV user import failing at row 42 parsing error</p>
+<p class="text-secondary text-body-sm truncate">Parser encounters unhandled character exception on accented name strings.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">S</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">sarah.jenkins@healthflow.org</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-rose-50 text-rose-700 font-bold">
+<span class="material-symbols-outlined text-code-sm">keyboard_double_arrow_up</span> HIGH
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-amber-100 text-amber-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Open
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>4 hours ago</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1045', 'Bulk CSV user import failing at row 42 parsing error', 'sarah.jenkins@healthflow.org', 'HIGH', 'OPEN', '4 hours ago', 'Import parser rejects special UTF-8 characters without clear validation message.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 5: TICK-1044 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="dev-team@startupforge.co" data-priority="LOW" data-status="IN_PROGRESS" data-title="Feature inquiry: Custom webhook payloads format">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1044', 'Feature inquiry: Custom webhook payloads format', 'dev-team@startupforge.co', 'LOW', 'IN_PROGRESS', 'Yesterday', 'Customer requesting documentation on HMAC signing algorithm for outbound audit events.')">TICK-1044</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1044', 'Feature inquiry: Custom webhook payloads format', 'dev-team@startupforge.co', 'LOW', 'IN_PROGRESS', 'Yesterday', 'Customer requesting documentation on HMAC signing algorithm for outbound audit events.')">Feature inquiry: Custom webhook payloads format</p>
+<p class="text-secondary text-body-sm truncate">Requesting docs regarding HMAC-SHA256 signing headers on subscription hooks.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">D</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">dev-team@startupforge.co</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-slate-100 text-secondary font-medium">
+<span class="material-symbols-outlined text-code-sm">keyboard_arrow_down</span> LOW
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-blue-100 text-blue-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> In Progress
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>Yesterday</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1044', 'Feature inquiry: Custom webhook payloads format', 'dev-team@startupforge.co', 'LOW', 'IN_PROGRESS', 'Yesterday', 'Customer requesting documentation on HMAC signing algorithm for outbound audit events.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 6: TICK-1043 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="amina.bello@novasystems.com" data-priority="MEDIUM" data-status="RESOLVED" data-title="Password reset email link expired within 5 minutes">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1043', 'Password reset email link expired within 5 minutes', 'amina.bello@novasystems.com', 'MEDIUM', 'RESOLVED', 'Yesterday', 'Adjusted Redis token TTL from default 300s to 3600s per enterprise security requirements.')">TICK-1043</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1043', 'Password reset email link expired within 5 minutes', 'amina.bello@novasystems.com', 'MEDIUM', 'RESOLVED', 'Yesterday', 'Adjusted Redis token TTL from default 300s to 3600s per enterprise security requirements.')">Password reset email link expired within 5 minutes</p>
+<p class="text-secondary text-body-sm truncate">Auth token expiring prematurely due to strict cache eviction policy.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">A</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">amina.bello@novasystems.com</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-amber-50 text-amber-700 font-medium">
+<span class="material-symbols-outlined text-code-sm">remove</span> MEDIUM
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-emerald-100 text-emerald-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Resolved
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>Yesterday</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1043', 'Password reset email link expired within 5 minutes', 'amina.bello@novasystems.com', 'MEDIUM', 'RESOLVED', 'Yesterday', 'Adjusted Redis token TTL from default 300s to 3600s per enterprise security requirements.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+<!-- Row 7: TICK-1042 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group" data-customer="tom.bradley@retailpulse.io" data-priority="LOW" data-status="RESOLVED" data-title="Weekly analytics automated summary report not delivered">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-1 items-start">
+<span class="font-code-sm text-code-sm font-bold text-primary hover:underline cursor-pointer" onclick="openDrawer('TICK-1042', 'Weekly analytics automated summary report not delivered', 'tom.bradley@retailpulse.io', 'LOW', 'RESOLVED', '2 days ago', 'Cron job rescheduled and email SMTP backpressure re-routed successfully.')">TICK-1042</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="max-w-md">
+<p class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors cursor-pointer" onclick="openDrawer('TICK-1042', 'Weekly analytics automated summary report not delivered', 'tom.bradley@retailpulse.io', 'LOW', 'RESOLVED', '2 days ago', 'Cron job rescheduled and email SMTP backpressure re-routed successfully.')">Weekly analytics automated summary report not delivered</p>
+<p class="text-secondary text-body-sm truncate">Cron runner deferred worker pool during database maintenance window.</p>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-label-xs text-on-surface-variant">T</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[180px]">tom.bradley@retailpulse.io</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-slate-100 text-secondary font-medium">
+<span class="material-symbols-outlined text-code-sm">keyboard_arrow_down</span> LOW
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-xs font-label-xs bg-emerald-100 text-emerald-800 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Resolved
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-right text-secondary text-label-xs font-label-xs">
+<span>2 days ago</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs font-semibold transition-colors" onclick="openDrawer('TICK-1042', 'Weekly analytics automated summary report not delivered', 'tom.bradley@retailpulse.io', 'LOW', 'RESOLVED', '2 days ago', 'Cron job rescheduled and email SMTP backpressure re-routed successfully.')" type="button">
+                View &amp; Edit
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- TABLE STATE: Zero Results State -->
+<div class="hidden p-space-xl text-center flex-col items-center justify-center py-16" id="view-empty-state">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center text-secondary mb-space-md">
+<span class="material-symbols-outlined text-3xl">search_off</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">No matching tickets found</h3>
+<p class="font-body-md text-body-md text-secondary max-w-md mx-auto mb-space-md">We couldn't find any support tickets matching your current search query or filter parameters.</p>
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm" onclick="clearAllFilters()" type="button">
+        Clear All Filters
+      </button>
+</div>
+<!-- TABLE STATE: Skeleton Loading View -->
+<div class="hidden p-space-md space-y-4" id="view-loading-skeletons">
+<div class="h-10 bg-surface-container-low rounded-lg animate-pulse w-full"></div>
+<div class="space-y-3">
+<div class="h-14 bg-surface-container-low/70 rounded-lg animate-pulse flex items-center px-4 justify-between">
+<div class="w-24 h-4 bg-surface-container-high rounded"></div>
+<div class="w-64 h-4 bg-surface-container-high rounded"></div>
+<div class="w-36 h-4 bg-surface-container-high rounded"></div>
+<div class="w-16 h-4 bg-surface-container-high rounded"></div>
+</div>
+<div class="h-14 bg-surface-container-low/70 rounded-lg animate-pulse flex items-center px-4 justify-between">
+<div class="w-24 h-4 bg-surface-container-high rounded"></div>
+<div class="w-64 h-4 bg-surface-container-high rounded"></div>
+<div class="w-36 h-4 bg-surface-container-high rounded"></div>
+<div class="w-16 h-4 bg-surface-container-high rounded"></div>
+</div>
+<div class="h-14 bg-surface-container-low/70 rounded-lg animate-pulse flex items-center px-4 justify-between">
+<div class="w-24 h-4 bg-surface-container-high rounded"></div>
+<div class="w-64 h-4 bg-surface-container-high rounded"></div>
+<div class="w-36 h-4 bg-surface-container-high rounded"></div>
+<div class="w-16 h-4 bg-surface-container-high rounded"></div>
+</div>
+<div class="h-14 bg-surface-container-low/70 rounded-lg animate-pulse flex items-center px-4 justify-between">
+<div class="w-24 h-4 bg-surface-container-high rounded"></div>
+<div class="w-64 h-4 bg-surface-container-high rounded"></div>
+<div class="w-36 h-4 bg-surface-container-high rounded"></div>
+<div class="w-16 h-4 bg-surface-container-high rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 5: Pagination Bar (FR-03 & Section 10) -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest px-space-md py-3 rounded-xl shadow-sm mb-space-xl">
+<div class="font-body-sm text-body-sm text-secondary">
+      Showing <span class="font-semibold text-on-surface">1</span> to <span class="font-semibold text-on-surface">7</span> of <span class="font-semibold text-on-surface">38</span> results
+    </div>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-low text-secondary/50 font-label-sm text-label-sm cursor-not-allowed flex items-center gap-1" disabled="" type="button">
+<span class="material-symbols-outlined text-code-sm">chevron_left</span>
+<span class="hidden sm:inline">Previous</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-bold shadow-sm" type="button">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">3</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">4</button>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="hidden sm:inline">Next</span>
+<span class="material-symbols-outlined text-code-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- SECTION 6: Customer Operations SLA Insights Bento (Visual Richness) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-lg">
+<!-- Visual Widget 1: Response Time Breakdown Sparkline -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Median First Response</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-label-xs font-bold">-18% vs last week</span>
+</div>
+<p class="font-display-lg text-display-lg text-on-surface">14m 20s</p>
+<p class="text-body-sm text-secondary">Target SLA: under 30 minutes for P1 incidents.</p>
+</div>
+<div class="mt-4 pt-4">
+<!-- Responsive Inline SVG sparkline -->
+<svg class="w-full h-12 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 300 60">
+<path d="M 0 45 Q 35 15, 75 35 T 150 20 T 225 38 T 300 10"></path>
+<path d="M 0 45 Q 35 15, 75 35 T 150 20 T 225 38 T 300 10 L 300 60 L 0 60 Z" fill="currentColor" fill-opacity="0.08" stroke="none"></path>
+</svg>
+</div>
+</div>
+<!-- Visual Widget 2: Priority Queue Ratio Gauge -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Queue Priority Ratio</span>
+<span class="font-code-sm text-code-sm text-secondary font-semibold">Active: 23</span>
+</div>
+<p class="font-display-lg text-display-lg text-on-surface">30.4% <span class="font-headline-sm text-headline-sm text-rose-600 font-semibold">High Priority</span></p>
+<p class="text-body-sm text-secondary">7 tickets currently flagged critical or needing immediate attention.</p>
+</div>
+<div class="mt-4 pt-4">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden flex">
+<div class="bg-rose-500 h-full" style="width: 30.4%" title="High: 30.4%"></div>
+<div class="bg-amber-400 h-full" style="width: 43.5%" title="Medium: 43.5%"></div>
+<div class="bg-slate-400 h-full" style="width: 26.1%" title="Low: 26.1%"></div>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-secondary mt-2">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> High (7)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Medium (10)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-slate-400"></span> Low (6)</span>
+</div>
+</div>
+</div>
+<!-- Visual Widget 3: On-Duty Senior Operations Specialist Banner -->
+<div class="bg-gradient-to-br from-surface-container-lowest to-surface-container-low p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Shift Supervisor</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Sarah Chen</h4>
+<p class="font-label-xs text-label-xs text-secondary">Escalation On-Call • Tier 3 Support</p>
+</div>
+<div class="relative">
+<img alt="Sarah Chen" class="w-12 h-12 rounded-xl object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1UH50e3e1DS5pPHZmk0aniCyyBbl0hqM6NxVH3o-u_ykSar4yLXqQGXh6q69W5Yb533HyERjXraSE82fdC0EtwWkc_Ao4qMuJ7ri-1gXDx0J0bTwzxui_K2UMWx1dlma313zToKHvMY2lWcpxR99Y7U665xjdjSM_f4VTWqAbmRo6Jc_8-Jr5oHdQ4YP_ZQbTmbDtCd6NOPB-xTb2raULY0lkgb48rI3U_jZtJK0Sna1Xxp9snbpzmMpak"/>
+<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-surface-container-lowest"></span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-label-xs font-label-xs">
+<span class="text-secondary">Handling 4 active tickets</span>
+<button class="px-2.5 py-1 rounded bg-surface-container-highest text-primary font-semibold hover:bg-primary hover:text-on-primary transition-colors" onclick="triggerToast('Operator ping dispatched to Sarah Chen')" type="button">
+          Request Assistance
+        </button>
+</div>
+</div>
+</div>
+<!-- SLIDING DRAWER: Ticket Detail & Status Management (Section 8 FR-06, FR-07) -->
+<div class="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-surface-container-lowest shadow-2xl translate-x-full transition-transform duration-300 ease-in-out flex flex-col" id="ticket-drawer">
+<!-- Drawer Header -->
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-headline-sm font-bold text-primary" id="drawer-ticket-id">TICK-1048</span>
+<span class="px-2 py-0.5 rounded-full text-label-xs font-bold bg-rose-50 text-rose-700" id="drawer-priority-badge">HIGH</span>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container-high text-secondary hover:text-on-surface transition-colors" onclick="closeDrawer()" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<!-- Drawer Content Body -->
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-lg">
+<!-- Title & Customer -->
+<div>
+<label class="block font-label-xs text-label-xs text-secondary uppercase font-semibold mb-1">Subject</label>
+<h3 class="font-headline-md text-headline-md text-on-surface" id="drawer-title">Payment gateway timeout during checkout flow</h3>
+<p class="font-label-sm text-label-sm text-secondary mt-1" id="drawer-customer">marcus.vance@acmecorp.com</p>
+</div>
+<!-- Description Body -->
+<div>
+<label class="block font-label-xs text-label-xs text-secondary uppercase font-semibold mb-1">Issue Description</label>
+<div class="p-space-md rounded-lg bg-surface-container-low text-body-md text-on-surface-variant leading-relaxed" id="drawer-desc">
+          High latency spikes observed on Stripe API token authorization webhook during enterprise checkout flow. Multiple transaction timeouts reported by users in the EU cluster.
+        </div>
+</div>
+<!-- State Transition Controls (FR-07) -->
+<div class="p-space-md rounded-xl bg-surface-container-low space-y-space-sm">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold">Change Ticket Status</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="px-3 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-label-sm text-label-sm font-semibold transition-colors flex items-center justify-center gap-1" onclick="updateTicketState('OPEN')" type="button">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span> Open
+          </button>
+<button class="px-3 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-900 font-label-sm text-label-sm font-semibold transition-colors flex items-center justify-center gap-1" onclick="updateTicketState('IN_PROGRESS')" type="button">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span> In Progress
+          </button>
+<button class="px-3 py-2 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-900 font-label-sm text-label-sm font-semibold transition-colors flex items-center justify-center gap-1" onclick="updateTicketState('RESOLVED')" type="button">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span> Resolved
+          </button>
+</div>
+</div>
+<!-- Internal Activity & SLA Milestones -->
+<div>
+<label class="block font-label-xs text-label-xs text-secondary uppercase font-semibold mb-space-sm">Timeline &amp; Activity Log</label>
+<div class="space-y-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary-fixed flex items-center justify-center text-primary text-code-sm font-bold mt-0.5">S</div>
+<div class="flex-1 text-body-sm">
+<p class="text-on-surface"><span class="font-semibold">Sarah Chen</span> assigned ticket to <span class="font-semibold">Core API Squad</span></p>
+<span class="text-secondary text-label-xs">14 mins ago</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-secondary text-code-sm font-bold mt-0.5">SYS</div>
+<div class="flex-1 text-body-sm">
+<p class="text-on-surface">Customer received automated acknowledgement email.</p>
+<span class="text-secondary text-label-xs">18 mins ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-space-md bg-surface-container-low flex items-center justify-between gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" onclick="closeDrawer()" type="button">
+        Cancel
+      </button>
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm" onclick="saveDrawerChanges()" type="button">
+        Save Updates
+      </button>
+</div>
+</div>
+<!-- MODAL: + Create Ticket Dialog (FR-01, FR-02) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-space-md" id="create-ticket-modal">
+<div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Create Support Ticket</h3>
+<p class="font-body-sm text-body-sm text-secondary">Dispatch a new issue to the operational queue.</p>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container-high text-secondary" onclick="closeCreateModal()" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<form class="p-space-lg space-y-space-md" id="create-ticket-form" onsubmit="handleCreateTicketSubmit(event)">
+<!-- Title Input -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1" for="new-title">Issue Title <span class="text-error">*</span></label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" id="new-title" placeholder="e.g., Database synchronization lag on customer dashboard" required="" type="text"/>
+</div>
+<!-- Customer Email -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1" for="new-email">Customer Email <span class="text-error">*</span></label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" id="new-email" placeholder="client.lead@enterprise.com" required="" type="email"/>
+</div>
+<!-- Priority Selector -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1" for="new-priority">Priority Level</label>
+<select class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" id="new-priority">
+<option value="HIGH">High (Urgent customer impact / SLA Risk)</option>
+<option selected="" value="MEDIUM">Medium (Standard request / Degraded feature)</option>
+<option value="LOW">Low (Inquiry, Cosmetic, Documentation)</option>
+</select>
+</div>
+<!-- Description Textarea -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1" for="new-desc">Detailed Description</label>
+<textarea class="w-full p-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" id="new-desc" placeholder="Provide context, reproducing steps, error codes, and customer tier..." rows="3"></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" onclick="closeCreateModal()" type="button">
+            Cancel
+          </button>
+<button class="px-space-md py-2 rounded-lg bg-primary hover:bg-tertiary text-on-primary font-label-md text-label-md shadow-md transition-all" type="submit">
+            Submit Ticket
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Scrim overlay for Drawer -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-40 hidden transition-opacity" id="drawer-scrim" onclick="closeDrawer()"></div>
+<!-- Notification Toast Container -->
+<div class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-space-md py-3 rounded-xl shadow-xl flex items-center gap-space-sm translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast">
+<span class="material-symbols-outlined text-emerald-400 text-body-lg">check_circle</span>
+<span class="font-label-sm text-label-sm font-medium" id="toast-message">Operation completed successfully</span>
+</div>
+</div>
+<script>
+  // Dynamic State Controller for Prototype Review
+  function setViewState(state) {
+    const normalTable = document.getElementById('view-normal-table');
+    const emptyState = document.getElementById('view-empty-state');
+    const loadingState = document.getElementById('view-loading-skeletons');
+    
+    // Reset view toggle buttons
+    ['normal', 'drawer', 'modal', 'empty', 'loading'].forEach(id => {
+      const btn = document.getElementById('btn-view-' + id);
+      if (btn) {
+        btn.className = "px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold text-on-surface-variant hover:text-on-surface transition-all";
+      }
+    });
+    
+    const activeBtn = document.getElementById('btn-view-' + state);
+    if (activeBtn) {
+      activeBtn.className = "px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold bg-primary text-on-primary shadow-sm transition-all";
+    }
+
+    if (state === 'normal') {
+      normalTable.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      loadingState.classList.add('hidden');
+      closeDrawer();
+      closeCreateModal();
+    } else if (state === 'empty') {
+      normalTable.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      emptyState.classList.add('flex');
+      loadingState.classList.add('hidden');
+      closeDrawer();
+      closeCreateModal();
+    } else if (state === 'loading') {
+      normalTable.classList.add('hidden');
+      emptyState.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      closeDrawer();
+      closeCreateModal();
+    } else if (state === 'drawer') {
+      normalTable.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      loadingState.classList.add('hidden');
+      openDrawer('TICK-1048', 'Payment gateway timeout during checkout flow', 'marcus.vance@acmecorp.com', 'HIGH', 'OPEN', '18 mins ago', 'High latency spikes observed on Stripe API token authorization webhook during enterprise checkout flow.');
+    } else if (state === 'modal') {
+      normalTable.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      loadingState.classList.add('hidden');
+      openCreateModal();
+    }
+  }
+
+  // Filter & Search Engine
+  function applyFilters() {
+    const statusVal = document.getElementById('filter-status').value;
+    const priorityVal = document.getElementById('filter-priority').value;
+    const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+    
+    // Update Tag indicators
+    document.getElementById('tag-status').innerHTML = `Status: <strong class="font-semibold">${statusVal}</strong>`;
+    document.getElementById('tag-priority').innerHTML = `Priority: <strong class="font-semibold">${priorityVal}</strong>`;
+
+    const rows = document.querySelectorAll('#ticket-table-body tr');
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const rowStatus = row.getAttribute('data-status');
+      const rowPriority = row.getAttribute('data-priority');
+      const rowTitle = (row.getAttribute('data-title') || '').toLowerCase();
+      const rowCustomer = (row.getAttribute('data-customer') || '').toLowerCase();
+
+      const matchStatus = (statusVal === 'ALL' || rowStatus === statusVal);
+      const matchPriority = (priorityVal === 'ALL' || rowPriority === priorityVal);
+      const matchSearch = (!searchVal || rowTitle.includes(searchVal) || rowCustomer.includes(searchVal));
+
+      if (matchStatus && matchPriority && matchSearch) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    document.getElementById('counter-shown').textContent = visibleCount;
+    
+    // Toggle Empty state if no rows visible
+    const normalTable = document.getElementById('view-normal-table');
+    const emptyState = document.getElementById('view-empty-state');
+    if (visibleCount === 0) {
+      normalTable.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      emptyState.classList.add('flex');
+    } else {
+      normalTable.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+    }
+  }
+
+  function handleSearch(val) {
+    applyFilters();
+  }
+
+  function clearAllFilters() {
+    document.getElementById('filter-status').value = 'ALL';
+    document.getElementById('filter-priority').value = 'ALL';
+    document.getElementById('sort-tickets').value = 'newest';
+    document.getElementById('search-input').value = '';
+    applyFilters();
+    triggerToast('All filters have been reset');
+  }
+
+  // Ticket Drawer Inspector Functions
+  function openDrawer(id, title, customer, priority, status, created, desc) {
+    document.getElementById('drawer-ticket-id').textContent = id;
+    document.getElementById('drawer-title').textContent = title;
+    document.getElementById('drawer-customer').textContent = customer;
+    document.getElementById('drawer-desc').textContent = desc || "No detailed logs provided.";
+    
+    const badge = document.getElementById('drawer-priority-badge');
+    badge.textContent = priority;
+    if (priority === 'HIGH') {
+      badge.className = "px-2 py-0.5 rounded-full text-label-xs font-bold bg-rose-50 text-rose-700";
+    } else if (priority === 'MEDIUM') {
+      badge.className = "px-2 py-0.5 rounded-full text-label-xs font-bold bg-amber-50 text-amber-700";
+    } else {
+      badge.className = "px-2 py-0.5 rounded-full text-label-xs font-bold bg-slate-100 text-secondary";
+    }
+
+    const drawer = document.getElementById('ticket-drawer');
+    const scrim = document.getElementById('drawer-scrim');
+    drawer.classList.remove('translate-x-full');
+    scrim.classList.remove('hidden');
+  }
+
+  function closeDrawer() {
+    const drawer = document.getElementById('ticket-drawer');
+    const scrim = document.getElementById('drawer-scrim');
+    if (drawer) drawer.classList.add('translate-x-full');
+    if (scrim) scrim.classList.add('hidden');
+  }
+
+  function updateTicketState(newStatus) {
+    const ticketId = document.getElementById('drawer-ticket-id').textContent;
+    triggerToast(`Status for ${ticketId} updated to ${newStatus}`);
+    closeDrawer();
+  }
+
+  function saveDrawerChanges() {
+    const ticketId = document.getElementById('drawer-ticket-id').textContent;
+    triggerToast(`Changes saved for ${ticketId}`);
+    closeDrawer();
+  }
+
+  // Create Ticket Modal Functions
+  function openCreateModal() {
+    const modal = document.getElementById('create-ticket-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeCreateModal() {
+    const modal = document.getElementById('create-ticket-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function handleCreateTicketSubmit(e) {
+    e.preventDefault();
+    const title = document.getElementById('new-title').value;
+    const email = document.getElementById('new-email').value;
+    closeCreateModal();
+    triggerToast(`Ticket created successfully for ${email}`);
+    document.getElementById('create-ticket-form').reset();
+  }
+
+  function triggerExportToast() {
+    triggerToast('Exporting 38 tickets to CSV...');
+  }
+
+  // Toast UI notification utility
+  let toastTimeout;
+  function triggerToast(message) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-message');
+    toastMsg.textContent = message;
+    
+    clearTimeout(toastTimeout);
+    toast.classList.remove('translate-y-24', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    toastTimeout = setTimeout(() => {
+      toast.classList.add('translate-y-24', 'opacity-0');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 3200);
+  }
+
+  // Keyboard shortcut listener (⌘K / Ctrl+K)
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const input = document.getElementById('search-input');
+      if (input) input.focus();
+    }
+  });
+</script></div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.02)]"><div class="w-full max-w-7xl mx-auto px-margin-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md font-label-sm text-label-sm text-secondary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>API v2.4 (Operational)</span></div><span class="hidden sm:inline text-outline-variant">•</span><a class="hover:text-primary transition-colors flex items-center gap-space-xs" href="#"><span class="material-symbols-outlined text-code-sm">menu_book</span>Documentation</a></div><div class="flex items-center gap-space-md font-label-xs text-label-xs text-secondary"><span>PulseDesk Operations Engine</span><span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-code-sm text-code-sm">v1.0.0</span></div></div></footer></body></html>
