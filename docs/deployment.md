@@ -58,11 +58,17 @@ Use a **Free** Node web service connected to the same repository and branch. `re
 
 | Setting | Exact value |
 | --- | --- |
+| Service type | Web Service |
+| Name | `pulsedesk-api` |
+| Repository / branch | `khushiray07/PulseDesk` / `main` |
+| Region | Singapore, matching the existing Neon project |
 | Root directory | Repository root (leave empty) |
 | Runtime | Node |
 | Instance type | Free |
+| Auto-deploy | Off during preparation; deploy manually when final settings are ready |
 | Build command | `npm ci --include=dev && npm run db:generate` |
 | Start command | `npm run db:migrate && npm start` |
+| Pre-deploy command | Leave empty on Free |
 | Health-check path | `/api/health` |
 | Persistent disk | None |
 
@@ -94,6 +100,22 @@ Set the following on Render; do not copy the local `.env` wholesale:
 Do not set `TEST_DATABASE_URL` or local development credentials on the production service. Retain the same session secret across redeploys. The free service has one instance; shared PostgreSQL sessions still survive application restarts.
 
 Render terminates HTTPS at its load balancer and passes HTTP to Express. `TRUST_PROXY=1` trusts the immediate Render proxy so Express recognizes HTTPS and issues Secure cookies. This does not mean blindly trusting the whole Vercel/Render chain. The Express port must remain behind Render's load balancer, which must control forwarded headers. Verify the cookie on the actual deployed path; do not disable Secure if it fails. References: [Render web services](https://render.com/docs/web-services), [Express proxy trust](https://expressjs.com/en/guide/behind-proxies/).
+
+### Backend-only preparation while the frontend is pending
+
+The Neon production database has been provisioned and verified: all five migrations are applied, their checksums match, all six application tables exist, and `pg_trgm` works. A read-only check using the session driver's `pg.Pool` configuration connected over TLS and read the `sessions` table successfully. No seed data was added. Copy the same pooled `DATABASE_URL`, including TLS parameters, privately from the ignored `server/.env.production` into Render. Neither the local `.env` nor the production file is uploaded to GitHub or read automatically by Render.
+
+For this stage, use Render's dashboard; no Render CLI installation or login is needed. Connect the GitHub account, choose **New → Web Service**, select the repository and use the table above. Ensure the committed deployment preparation is pushed to `main` before Render builds it. The manual dashboard flow requires entering each variable yourself; `SESSION_SECRET` is generated automatically only when using the Blueprint. Use Render's secret generator or privately generate a stable random value of at least 32 characters.
+
+Set up the private S3 bucket and enter its credentials, the Neon URL, and the fixed settings now. Keep automatic deployments off while final origins and OAuth credentials are pending. Creating a web service triggers an initial deployment; the current application deliberately refuses to start without valid production authentication and storage settings. Do not treat that incomplete configuration as an application regression or relax the guards to make it green.
+
+`APP_ORIGIN` means the browser application's eventual confirmed HTTPS origin. It is not automatically the Render backend URL. `GOOGLE_CALLBACK_URL` must use that same browser origin followed by `/api/auth/google/callback`, because login starts through the frontend's `/api` proxy and the OAuth transaction cookie belongs to that browser origin. Using a direct Render callback with the frontend proxy would lose the cookie containing the OAuth state. CORS alone cannot fix this or make SameSite=Lax cookies work with unrelated frontend/backend sites.
+
+No frontend deployment is needed to prepare these settings. Until its actual public origin is confirmed, final `APP_ORIGIN`, Google registration and a successful production login remain pending. Do not invent a frontend domain, use localhost for production, or register a temporary Render callback. Keep Secure, HttpOnly, host-only cookies and SameSite=Lax unchanged; keep the existing session-backed CSRF token and exact Origin check unchanged. Vite's proxy remains local tooling and does not provide production routing.
+
+After Render obtains a public URL, record it as the backend origin for the later frontend proxy. The Google redirect URI will still be the confirmed browser origin, not that Render URL. Once the browser origin is known, enter `APP_ORIGIN` and `GOOGLE_CALLBACK_URL`, register the exact callback in the production Google Web Application client, enter its client ID/secret in Render, and redeploy. Preserve the existing local client/redirect; add allowed test users while Google's consent screen remains in Testing. Detailed Google steps are below.
+
+After successful startup, verify the direct Render `/api/health` returns `200` and `{ "success": true, "data": { "status": "ok" } }`, and `/api/tickets` returns `401` without authentication. Full login, CSRF/browser-cookie behavior, and durable upload/restart checks require the final browser routing and a configured bucket; local tests do not replace these live checks. Free Render can sleep after 15 idle minutes, so allow it to wake before diagnosing an initial request failure.
 
 ## Neon database and migrations
 
@@ -192,10 +214,10 @@ The last command includes the production frontend build. Tests use only the expl
 | --- | --- |
 | Vercel production URL | Not deployed/confirmed |
 | Render service URL | Not deployed/confirmed |
-| Neon production database | Not provisioned/verified |
+| Neon production database | Provisioned; five migrations/checksums, application tables and `pg_trgm` verified; no seed data added |
 | Google production callback | Pending confirmed public routing |
 | Attachment plan | Free Render + private S3-compatible adapter prepared; bucket pending |
 | Live smoke test | Pending deployment and real Google login |
-| Local verification | 170 API/isolation tests, 39 development browser tests, 39 production browser tests, lint, production build passed |
+| Local verification | 170 API/isolation tests, lint, Prisma generation, production build and Render YAML validation passed; full production-browser reruns had timing/teardown failures (38/39, then 37/39); all three affected tests passed a focused rerun |
 
 Replace these entries only after observing the actual provider results. Keep secrets out of this guide, frontend variables, Git, screenshots, and logs. `.gitignore` ignores `.env*` variants (except checked-in examples); local environment files must stay untracked.
