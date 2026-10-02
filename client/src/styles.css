@@ -410,3 +410,17 @@ tbody tr:nth-child(3n + 3) .customer-avatar { background: #eaf4f4; color: #7a9e9
   .toast-region { bottom: 16px; right: 16px; max-width: calc(100vw - 32px); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* Authentication */
+.auth-loading { min-height: 65vh; display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; padding: 28px; color: #64748b; }
+.login-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(ellipse at top, #eef2ff, #f7f8fc 65%); }
+.login-card { width: min(100%, 420px); padding: 42px 32px; border: 1px solid #e4e9f2; border-radius: 20px; background: #fff; box-shadow: 0 12px 48px #17243b08; text-align: center; }
+.login-mark { display: inline-flex; color: #4f46e5; padding: 14px; background: #eef2ff; border-radius: 16px; margin-bottom: 22px; }
+.login-card h1 { font-size: 32px; letter-spacing: -1px; }
+.login-subtitle { color: #64748b; margin: 10px 0 32px; }
+.google-login { width: 100%; justify-content: center; gap: 12px; padding: 14px; }
+.login-note { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 12px; color: #64748b; margin-top: 24px; }
+.login-card .form-alert { margin-bottom: 20px; text-align: left; }
+.header-user { display: flex; align-items: center; gap: 10px; font-size: 13px; white-space: nowrap; }
+@media (max-width: 850px) { .header-inner { gap: 12px; } .header-link, .workspace-label { display: none; } .header-user { margin-left: auto; } }
+@media (max-width: 420px) { .header-user { gap: 6px; } .header-user > span:not(.user-avatar) { max-width: 85px; overflow: hidden; text-overflow: ellipsis; } .login-card { padding: 32px 22px; } }
