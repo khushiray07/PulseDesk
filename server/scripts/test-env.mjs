@@ -17,5 +17,6 @@ export function getTestEnvironment(source = process.env) {
     GOOGLE_CALLBACK_URL: 'http://127.0.0.1:5174/api/auth/google/callback', GOOGLE_CLIENT_ID: 'test-client', GOOGLE_CLIENT_SECRET: 'test-secret',
     PULSEDESK_TEST_DATABASE_VERIFIED: 'true',
     ATTACHMENT_STORAGE_DIR: fileURLToPath(new URL(`../../.local/test-attachments/${randomUUID()}/`, import.meta.url)),
+    ATTACHMENT_STORAGE_DRIVER: 'local',
   };
 }

@@ -28,7 +28,7 @@ export async function uploadAttachment(ticketId, file) {
       await attachmentStorage.write(storageKey, file.buffer);
       written = true;
       return tx.attachment.create({ data: { ticketId, storageKey, ...metadata }, select: publicFields });
-    });
+    }, { timeout: 30000 }); // Allow a bounded remote object-store write inside the existing transaction.
   } catch (error) {
     if (written) await attachmentStorage.remove(storageKey);
     throw error;

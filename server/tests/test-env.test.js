@@ -19,12 +19,14 @@ describe('test database isolation', () => {
   });
 
   it('selects the separate test database without modifying the caller environment', () => {
-    const source = { DATABASE_URL: 'postgresql://user@localhost/pulsedesk', TEST_DATABASE_URL: 'postgresql://user@localhost/pulsedesk_test' };
+    const source = { DATABASE_URL: 'postgresql://user@localhost/pulsedesk', TEST_DATABASE_URL: 'postgresql://user@localhost/pulsedesk_test', ATTACHMENT_STORAGE_DRIVER: 's3' };
     const result = getTestEnvironment(source);
     expect(result.DATABASE_URL).toBe(source.TEST_DATABASE_URL);
     expect(result.PULSEDESK_TEST_DATABASE_VERIFIED).toBe('true');
     expect(result.ATTACHMENT_STORAGE_DIR).toContain('/.local/test-attachments/');
     expect(result.ATTACHMENT_STORAGE_DIR).not.toBe(source.ATTACHMENT_STORAGE_DIR);
+    expect(result.ATTACHMENT_STORAGE_DRIVER).toBe('local');
+    expect(source.ATTACHMENT_STORAGE_DRIVER).toBe('s3');
     expect(source.DATABASE_URL).toBe('postgresql://user@localhost/pulsedesk');
   });
 });
