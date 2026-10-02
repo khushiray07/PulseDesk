@@ -10,6 +10,9 @@ export const uploadAttachment = async (id, file) => {
 };
 export const deleteAttachment = async (id, attachmentId) => (await api.delete(`/tickets/${id}/attachments/${attachmentId}`)).data.data;
 export const attachmentContentUrl = (id, attachmentId, download = false) => `/api/tickets/${id}/attachments/${attachmentId}/content${download ? '?download=1' : ''}`;
+export const addAssignee = async (id, userId) => (await api.post(`/tickets/${id}/assignees`, { userId })).data.data;
+export const removeAssignee = async (id, userId) => (await api.delete(`/tickets/${id}/assignees/${userId}`)).data.data;
+export const addComment = async (id, data) => (await api.post(`/tickets/${id}/comments`, data)).data.data;
 export function errorMessage(error) {
   return error.response?.data?.error?.message || 'We couldn’t reach the server. Check your connection and try again.';
 }
