@@ -38,6 +38,8 @@ If using your own PostgreSQL instance, create separate development and test data
 
 The seed inserts 30 realistic tickets with all nine status/priority combinations and varied timestamps. Re-running it preserves existing tickets and edits; it does not reset your data. Example email domains are fictional.
 
+Fuzzy search requires PostgreSQL's `pg_trgm` extension, enabled by the new migration when you run `npm run db:migrate`. Existing installations should run that command once to apply the enhancement. The database role needs `CREATE` permission on the database to enable this trusted extension; alternatively, a database administrator can enable it before migrations run. See the [PostgreSQL pg_trgm documentation](https://www.postgresql.org/docs/14/pgtrgm.html).
+
 ## Environment
 
 | Variable | Purpose | Default/example |
@@ -67,11 +69,11 @@ npm run test:e2e:preview
 npm run build
 ```
 
-`npm test` runs 39 checks with Vitest and Supertest: 33 database-backed API tests and six test-database isolation checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors.
+`npm test` runs 52 checks with Vitest and Supertest: the original 33 database-backed API tests, six test-database isolation checks, and 13 fuzzy-search checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors. Fuzzy-search coverage includes title/email typos, literal-match precedence, date sorting, combined filters, multiple pages and out-of-range pages, precise known-email lookup, unchanged response fields, and SQL-looking input.
 
-`npm run test:e2e` runs 13 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, and protection against stale search responses. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL.
+`npm run test:e2e` runs 14 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, protection against stale search responses, and fuzzy search through the existing dashboard with filters and sorting. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL.
 
-`npm run test:e2e:preview` builds the production bundle and runs the same 13 browser checks against Vite preview. Both development and production-preview modes have been verified.
+`npm run test:e2e:preview` builds the production bundle and runs the same 14 browser checks against Vite preview.
 
 All test commands require an explicit `TEST_DATABASE_URL` whose database name ends in `_test`. They reject a test URL pointing at the development database, even when connection credentials or URL schema parameters differ. Tests migrate and reset only the test database. Run suites sequentially because they share test fixtures. Browser test servers use ports 5010 and 5174 and shut down afterward; they can run while the development app is open.
 
@@ -108,7 +110,11 @@ Example list query:
 /api/tickets?search=payment&status=OPEN&priority=HIGH&sort=newest&page=1&limit=10
 ```
 
-Search is a trimmed, case-insensitive substring match on title **or** email. Status and priority filters are combined with that search. Creation-date sorting is `newest` (default) or `oldest`, with an ID tie-breaker for stable pagination. Every page contains at most 10 tickets. `page` defaults to 1; if supplied it must be a positive integer. Optional `limit` must equal 10.
+Search preserves trimmed, case-insensitive exact and literal substring matching on title **or** email. It additionally accepts typo-tolerant matches, such as `pasword` for "Password reset issue" and `paymnt` for "Payment failed", through PostgreSQL trigram functions. Status and priority filters apply before ranking and pagination; the total count uses the identical match conditions.
+
+Results rank full-field exact matches first, literal substring matches second, and fuzzy matches last. Fuzzy matches rank by decreasing similarity. Creation-date sorting is `newest` (default) or `oldest` within each literal group and between fuzzy matches with equal similarity; ID breaks remaining ties. Searches without a query retain the original date-only sorting. Every page contains at most 10 tickets. `page` defaults to 1; if supplied it must be a positive integer. Optional `limit` must equal 10. The endpoint parameters and response fields are unchanged.
+
+Ordinary alphanumeric search words/phrases of at least four characters use `word_similarity` against title and email with a minimum score of 0.5. Email queries containing `@` use whole-email `similarity` with a minimum score of 0.6, and only add fuzzy results when there are no literal matches under the active filters. This keeps known customer-email searches precise. Short queries and punctuation-heavy queries remain literal; `%`, `_`, and backslashes retain their existing literal meaning. Thresholds are explicit in the service, with no connection-wide similarity settings or new API parameters.
 
 ```json
 {
@@ -149,7 +155,7 @@ Express routes -> controllers -> Zod validation
 
 The modular monolith has one domain and one table. HTTP handling, validation, database queries, and error handling are separated. `server/src/app.js` can be tested without opening a port; `server/src/server.js` handles startup and shutdown. SQL migration files include enum/length/nonblank constraints and a creation-date/ID index.
 
-List results and matching counts use a repeatable-read transaction so pagination metadata describes the same database snapshot. Summary uses one unfiltered grouped query. There is no in-memory data store or frontend pagination. Prisma 6 is pinned to match the schema-based configuration used here; the transitive `deepmerge-ts` dependency is overridden to its patched 8.x release and verified with generation, migrations, and tests. See the [Prisma 6 data-source documentation](https://docs.prisma.io/docs/orm/v6/prisma-schema/overview/data-sources).
+List results and matching counts use a repeatable-read transaction so pagination metadata describes the same database snapshot. Search uses parameterized `Prisma.sql` / `$queryRaw` queries inside the existing ticket service to access trigram functions and ranking; user input is bound as data. Lists without search continue to use the existing Prisma model queries. Summary uses one unfiltered grouped query. There is no in-memory data store or frontend pagination. The extension migration changes no ticket fields or existing data; no new indexes are needed for the assignment's small dataset. Prisma 6 is pinned to match the schema-based configuration used here; the transitive `deepmerge-ts` dependency is overridden to its patched 8.x release and verified with generation, migrations, and tests. See the [Prisma 6 data-source documentation](https://docs.prisma.io/docs/orm/v6/prisma-schema/overview/data-sources).
 
 The React UI uses small API hooks rather than an additional global state library. URL parameters retain the queue view, search is debounced by 300 ms, and aborted requests cannot overwrite newer results. Summary/list requests fail independently. The native dialog provides modal keyboard containment, explicit initial focus, Escape handling, and focus restoration. Fonts are bundled locally; there are no runtime font/CDN dependencies. Tailwind uses its [Vite integration](https://tailwindcss.com/docs/installation/using-vite).
 

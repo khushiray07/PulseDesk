@@ -221,3 +221,27 @@ test('an older search response cannot replace newer search results', async ({ pa
   await expect(page.locator('tbody tr').first()).toContainText('Webhook signature');
   await expect(search).toHaveValue('Webhook');
 });
+
+test('fuzzy title search works with filters, date sorting and the existing dashboard', async ({ page }) => {
+  await page.goto('/dashboard');
+  const total = (await (await page.request.get('/api/tickets/summary')).json()).data.total;
+  await page.getByRole('textbox', { name: 'Search tickets' }).fill('pasword');
+  await expect(page.locator('tbody tr')).toHaveCount(1);
+  await expect(page.locator('tbody tr').first()).toContainText('Password reset link');
+  await page.getByLabel('Filter by status').selectOption('RESOLVED');
+  await page.getByLabel('Filter by priority').selectOption('MEDIUM');
+  await page.getByLabel('Sort by creation date').selectOption('oldest');
+  await expect(page.locator('tbody tr')).toHaveCount(1);
+  await expect(page.locator('tbody tr').first()).toContainText('Password reset link');
+  await expect(summaryValues(page).first()).toHaveText(String(total));
+  await page.getByRole('button', { name: 'Clear all' }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await expect(page.locator('tbody tr')).toHaveCount(10);
+  await page.getByRole('textbox', { name: 'Search tickets' }).fill('paymnt');
+  await expect(page).toHaveURL(/search=paymnt/);
+  await expect(page.locator('tbody tr')).toHaveCount(2);
+  await expect(page.locator('tbody .ticket-title').filter({ hasText: 'Payment gateway' })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('textbox', { name: 'Search tickets' })).toHaveValue('paymnt');
+  await expect(page.locator('tbody .ticket-title').filter({ hasText: 'Payment gateway' })).toBeVisible();
+});
