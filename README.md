@@ -1,6 +1,6 @@
 # PulseDesk
 
-A focused support ticket workspace built with React, Express, Prisma, and PostgreSQL. Create customer requests, find tickets with combined search/filter/sort controls, and update status and priority. All ticket data persists in PostgreSQL.
+A focused support ticket workspace built with React, Express, Prisma, and PostgreSQL. Create customer requests, find tickets with combined search/filter/sort controls, and update status, priority, and rich-text descriptions. Tickets and attachment metadata persist in PostgreSQL; attachment files use a replaceable local storage adapter.
 
 ## Quick start
 
@@ -49,6 +49,7 @@ Fuzzy search requires PostgreSQL's `pg_trgm` extension, enabled by the new migra
 | `PORT` | Express listening port | `5000` |
 | `HOST` | Express listening host | `127.0.0.1` |
 | `API_PROXY_TARGET` | Vite development/preview API target | `http://127.0.0.1:5000` |
+| `ATTACHMENT_STORAGE_DIR` | Persistent local file directory (optional) | Project-root `.local/attachments` |
 | `PLAYWRIGHT_EXECUTABLE_PATH` | Optional Chrome/Chromium executable for browser tests | Installed Google Chrome by default |
 
 Environment files, local PostgreSQL data, build output, and test artifacts are ignored by Git. The optional native database is stored in `.local/postgres` and accepts local connections on loopback only. Its trust authentication is intended for this local development setup. The Docker option uses the example development credentials from the environment file.
@@ -69,13 +70,13 @@ npm run test:e2e:preview
 npm run build
 ```
 
-`npm test` runs 52 checks with Vitest and Supertest: the original 33 database-backed API tests, six test-database isolation checks, and 13 fuzzy-search checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors. Fuzzy-search coverage includes title/email typos, literal-match precedence, date sorting, combined filters, multiple pages and out-of-range pages, precise known-email lookup, unchanged response fields, and SQL-looking input.
+`npm test` runs 79 checks with Vitest and Supertest: the original 33 database-backed API tests, six test-database isolation checks, 13 fuzzy-search checks, 13 attachment checks, and 14 rich-text checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors. Fuzzy-search coverage includes title/email typos, literal-match precedence, date sorting, combined filters, multiple pages and out-of-range pages, precise known-email lookup, unchanged response fields, and SQL-looking input.
 
-`npm run test:e2e` runs 14 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, protection against stale search responses, and fuzzy search through the existing dashboard with filters and sorting. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL.
+`npm run test:e2e` runs 23 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, protection against stale search responses, and fuzzy search through the existing dashboard with filters and sorting. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL. Nine content tests cover formatted create/edit/reload, multiple attachments, paste and drag/drop, failed-upload retry without duplicate creation, validation/removal, persisted deletion, legacy descriptions, sanitization, mobile content controls, and JPEG/WEBP content detection/previews.
 
-`npm run test:e2e:preview` builds the production bundle and runs the same 14 browser checks against Vite preview.
+`npm run test:e2e:preview` builds the production bundle and runs the same 23 browser checks against Vite preview.
 
-All test commands require an explicit `TEST_DATABASE_URL` whose database name ends in `_test`. They reject a test URL pointing at the development database, even when connection credentials or URL schema parameters differ. Tests migrate and reset only the test database. Run suites sequentially because they share test fixtures. Browser test servers use ports 5010 and 5174 and shut down afterward; they can run while the development app is open.
+All test commands require an explicit `TEST_DATABASE_URL` whose database name ends in `_test`. They reject a test URL pointing at the development database, even when connection credentials or URL schema parameters differ. Tests migrate and reset only the test database. Each run also receives a generated `.local/test-attachments/<UUID>` storage directory, overriding any development storage setting, and removes it on completion. Run suites sequentially because they share test fixtures. Browser test servers use ports 5010 and 5174 and shut down afterward; they can run while the development app is open.
 
 If Chrome is not installed, install it or set `PLAYWRIGHT_EXECUTABLE_PATH` to a compatible Chromium executable. Failure traces/screenshots are written to `test-results/`, with an HTML report in `playwright-report/`.
 
@@ -101,7 +102,11 @@ Stop the development application with Ctrl+C. Stop the optional native database 
 | GET | `/api/tickets` | Backend search/filter/sort/pagination; 200 |
 | GET | `/api/tickets/summary` | Unfiltered total/open/inProgress/resolved counts; 200 |
 | GET | `/api/tickets/:id` | Full ticket detail; 200 or 404 |
-| PATCH | `/api/tickets/:id` | Update status and/or priority; 200 or 404 |
+| PATCH | `/api/tickets/:id` | Update status, priority, and/or description; 200 or 404 |
+| POST | `/api/tickets/:id/attachments` | Upload one multipart `file`; 201 |
+| GET | `/api/tickets/:id/attachments` | List attachment metadata; 200 |
+| GET | `/api/tickets/:id/attachments/:attachmentId/content` | Image preview or document download; `?download=1` forces download |
+| DELETE | `/api/tickets/:id/attachments/:attachmentId` | Delete file and metadata; 200 or 404 |
 | GET | `/api/health` | Local server availability check |
 
 Example list query:
@@ -153,22 +158,40 @@ Express routes -> controllers -> Zod validation
                Prisma -> PostgreSQL
 ```
 
-The modular monolith has one domain and one table. HTTP handling, validation, database queries, and error handling are separated. `server/src/app.js` can be tested without opening a port; `server/src/server.js` handles startup and shutdown. SQL migration files include enum/length/nonblank constraints and a creation-date/ID index.
+The modular monolith has one ticket domain with `Ticket` and `Attachment` tables. HTTP handling, validation, database queries, and error handling are separated. `server/src/app.js` can be tested without opening a port; `server/src/server.js` handles startup and shutdown. SQL migration files include enum/length/nonblank constraints and a creation-date/ID index.
 
 List results and matching counts use a repeatable-read transaction so pagination metadata describes the same database snapshot. Search uses parameterized `Prisma.sql` / `$queryRaw` queries inside the existing ticket service to access trigram functions and ranking; user input is bound as data. Lists without search continue to use the existing Prisma model queries. Summary uses one unfiltered grouped query. There is no in-memory data store or frontend pagination. The extension migration changes no ticket fields or existing data; no new indexes are needed for the assignment's small dataset. Prisma 6 is pinned to match the schema-based configuration used here; the transitive `deepmerge-ts` dependency is overridden to its patched 8.x release and verified with generation, migrations, and tests. See the [Prisma 6 data-source documentation](https://docs.prisma.io/docs/orm/v6/prisma-schema/overview/data-sources).
 
 The React UI uses small API hooks rather than an additional global state library. URL parameters retain the queue view, search is debounced by 300 ms, and aborted requests cannot overwrite newer results. Summary/list requests fail independently. The native dialog provides modal keyboard containment, explicit initial focus, Escape handling, and focus restoration. Fonts are bundled locally; there are no runtime font/CDN dependencies. Tailwind uses its [Vite integration](https://tailwindcss.com/docs/installation/using-vite).
 
+## Attachments and rich descriptions
+
+Run `npm run db:generate` and `npm run db:migrate` after upgrading. The additive `20261002010000_add_attachments` migration creates attachment metadata, a ticket foreign key with cascade deletion, a unique storage key, a per-ticket lookup index, and a file-size constraint. It does not rewrite existing descriptions or tickets. File bytes are never stored in PostgreSQL.
+
+The storage boundary is `server/src/services/attachment-storage.js` (`write`, `read`, `remove` by generated key). Local files live in ignored `.local/attachments`, independent of the server's working directory; use `ATTACHMENT_STORAGE_DIR` to select another persistent directory. Back up both this directory and PostgreSQL. Restarting retains files. Replacing this adapter with object storage later does not change ticket business logic; there is no S3 infrastructure here.
+
+Uploads use maintained Multer with bounded memory (one file per request, 5 MiB maximum) and at most 10 attachments per ticket. `file-type` detects PNG/JPEG/WEBP/PDF from bytes rather than trusting the browser's MIME value. TXT requires a `.txt` filename and strictly valid nonbinary UTF-8. Original filenames are cleaned for display; server-generated UUID keys determine storage paths. Keys and absolute paths are excluded from public metadata. Downloads use explicit MIME types, `nosniff`, a sandbox CSP, and attachment disposition for documents; images can render as thumbnails. Ticket/attachment IDs must be valid UUIDs and belong together. A ticket-row lock serializes concurrent uploads when enforcing the cap. A failed database write removes the newly written file; failed uploads preserve the ticket.
+
+`AttachmentUploader` supports browsing, dropping, and clipboard files, and displays thumbnails, names, sizes, types, readiness, upload status, individual failures, and removal controls. Creation saves the ticket first, then uploads files sequentially. Partial failures keep the form and the saved ID: retry uploads, remove failed files and continue, or open the saved ticket. Successful files are not uploaded again. Existing tickets support additional uploads and attachment deletion.
+
+`RichTextEditor` uses [TipTap React + StarterKit](https://tiptap.dev/docs/editor/getting-started/install/react), restricted to paragraphs, bold, italic, lists, links, inline code, code blocks, and undo/redo. The toolbar stays small. Pasted formatting is sanitized to supported elements. Clipboard files take precedence over clipboard text when both are present: image paste anywhere in the create form or description editor queues attachments, while ordinary text paste goes to the editor. Image drops in the editor also queue attachments. No image nodes or base64 data belong in description HTML.
+
+The persisted format for formatted descriptions is **sanitized HTML in the existing `description` string**, preserving the API response fields. Legacy plain-text strings remain unchanged and render through React as text with preserved line breaks; strings containing HTML tags are treated as rich content. Editor initialization safely escapes plain text. Queue excerpts show text rather than HTML tags. PATCH additionally accepts `description`; a separate edit/save/cancel form on the detail page preserves existing property updates.
+
+The backend uses [sanitize-html](https://github.com/apostrophecms/sanitize-html) with an explicit allowlist of supported tags and link attributes. Scripts, styles, event handlers, embedded media, images, and unsafe link schemes are stripped. The frontend sanitizes again with [DOMPurify](https://github.com/cure53/DOMPurify) before rendering and importing pasted HTML. Links use `noopener noreferrer`. Descriptions must contain visible text, including after sanitization; `<p></p>`, nonbreaking spaces, invisible characters, and image-only descriptions are rejected. Maximum size is 50,000 source HTML characters and 10,000 text characters.
+
+Local storage serves a single application instance; shared/multiple-instance deployments need a shared volume or object-storage adapter. File signature checks are type validation, not malware scanning. There is no antivirus service, authentication, resumable upload, or distributed transaction between files and PostgreSQL. Ordinary write failures have compensation, but abrupt process/host failures can leave orphan files that require operational cleanup. Any future ticket-deletion service must remove associated files as well as cascading metadata.
+
 ## Assumptions and limitations
 
 - Medium is preselected in the create form as an implementation assumption; the API requires priority explicitly.
-- Tickets use UUIDs, shortened in the queue and shown fully in details. Only status and priority are editable after creation.
+- Tickets use UUIDs, shortened in the queue and shown fully in details. Status, priority, and description are editable after creation; title and customer email remain fixed.
 - Creating a ticket opens its detail page so it can be found even when active queue filters would exclude it. Returning restores the previous queue query and refreshes its data.
 - Timestamps are stored with timezone support and displayed in the browser's local timezone. Seed dates are relative to the first seed run and remain stable on subsequent runs.
 - The small Needs Attention dot is derived from HIGH priority and OPEN status; it is not a stored field or an additional query mode.
-- Authentication, assignments, notifications, attachments, analytics, audit history, deletion, and deployment are outside the assignment's scope.
+- Comments, users, authentication, Google login, assignments, notifications, analytics, audit history, ticket deletion, and deployment remain outside this enhancement's scope.
 - Concurrent edits use last-write-wins behavior. There is no real-time synchronization or optimistic concurrency control.
-- Querying uses substring matching and offset pagination, which suit the assignment dataset; large datasets would need separate performance work.
+- Querying uses exact, substring, and trigram matching with offset pagination, which suit the assignment dataset; large datasets would need separate performance work.
 - The native PostgreSQL path was verified with PostgreSQL 14.17 on macOS. Docker Compose is provided as an alternative; Docker startup was not verified here because its daemon was unavailable.
 
 ## Project references and time spent
