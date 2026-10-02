@@ -1,6 +1,14 @@
 import { ZodError } from 'zod';
+import multer from 'multer';
 
 export function errorMiddleware(error, _req, res, _next) {
+  if (error instanceof multer.MulterError) {
+    const oversized = error.code === 'LIMIT_FILE_SIZE';
+    return res.status(oversized ? 413 : 400).json({ success: false, error: {
+      code: oversized ? 'FILE_TOO_LARGE' : 'INVALID_UPLOAD',
+      message: oversized ? 'Each attachment must be 5 MiB or smaller.' : 'Upload exactly one file using the file field, with no extra fields.',
+    } });
+  }
   if (error instanceof ZodError) {
     const details = {};
     for (const issue of error.issues) {

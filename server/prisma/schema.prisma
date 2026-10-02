@@ -28,7 +28,22 @@ model Ticket {
   status        Status   @default(OPEN)
   createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  attachments   Attachment[]
 
   @@index([createdAt, id])
   @@map("tickets")
+}
+
+model Attachment {
+  id         String   @id @default(uuid()) @db.Uuid
+  ticketId   String   @map("ticket_id") @db.Uuid
+  ticket     Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  fileName   String   @map("file_name") @db.VarChar(255)
+  storageKey String   @unique @map("storage_key") @db.VarChar(80)
+  mimeType   String   @map("mime_type") @db.VarChar(100)
+  fileSize   Int      @map("file_size")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([ticketId, createdAt, id])
+  @@map("attachments")
 }

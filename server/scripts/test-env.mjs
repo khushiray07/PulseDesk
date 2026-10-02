@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+import { randomUUID } from 'node:crypto';
 export function getTestEnvironment(source = process.env) {
   const target = source.TEST_DATABASE_URL;
   if (!target) throw new Error('Set TEST_DATABASE_URL to a dedicated database ending in _test.');
@@ -11,5 +13,7 @@ export function getTestEnvironment(source = process.env) {
   if (source.DATABASE_URL && identity(target) === identity(source.DATABASE_URL)) {
     throw new Error('Refusing to run destructive tests against the development database.');
   }
-  return { ...source, DATABASE_URL: target, NODE_ENV: 'test', PULSEDESK_TEST_DATABASE_VERIFIED: 'true' };
+  return { ...source, DATABASE_URL: target, NODE_ENV: 'test', PULSEDESK_TEST_DATABASE_VERIFIED: 'true',
+    ATTACHMENT_STORAGE_DIR: fileURLToPath(new URL(`../../.local/test-attachments/${randomUUID()}/`, import.meta.url)),
+  };
 }

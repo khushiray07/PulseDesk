@@ -23,6 +23,8 @@ describe('test database isolation', () => {
     const result = getTestEnvironment(source);
     expect(result.DATABASE_URL).toBe(source.TEST_DATABASE_URL);
     expect(result.PULSEDESK_TEST_DATABASE_VERIFIED).toBe('true');
+    expect(result.ATTACHMENT_STORAGE_DIR).toContain('/.local/test-attachments/');
+    expect(result.ATTACHMENT_STORAGE_DIR).not.toBe(source.ATTACHMENT_STORAGE_DIR);
     expect(source.DATABASE_URL).toBe('postgresql://user@localhost/pulsedesk');
   });
 });
