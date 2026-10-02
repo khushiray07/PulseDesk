@@ -7,5 +7,6 @@ export async function listComments(req, res) {
 }
 export async function createComment(req, res) {
   const { id } = ticketParamsSchema.parse(req.params);
-  res.status(201).json({ success: true, data: await service.createComment(id, createCommentSchema.parse(req.body)) });
+  const data = createCommentSchema.parse(req.body);
+  res.status(201).json({ success: true, data: await service.createComment(id, { ...data, userId: req.user.id }) });
 }

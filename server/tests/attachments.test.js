@@ -1,6 +1,6 @@
 import { beforeAll, beforeEach, afterAll, describe, expect, it } from 'vitest';
 import { rm, readdir } from 'node:fs/promises';
-import request from 'supertest';
+import request from './helpers/request.js';
 import { app } from '../src/app.js';
 import { prisma } from '../src/utils/prisma.js';
 

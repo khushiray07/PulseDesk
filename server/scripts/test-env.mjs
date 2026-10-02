@@ -13,7 +13,9 @@ export function getTestEnvironment(source = process.env) {
   if (source.DATABASE_URL && identity(target) === identity(source.DATABASE_URL)) {
     throw new Error('Refusing to run destructive tests against the development database.');
   }
-  return { ...source, DATABASE_URL: target, NODE_ENV: 'test', PULSEDESK_TEST_DATABASE_VERIFIED: 'true',
+  return { ...source, DATABASE_URL: target, NODE_ENV: 'test', SESSION_SECRET: randomUUID() + randomUUID(), APP_ORIGIN: 'http://127.0.0.1:5174',
+    GOOGLE_CALLBACK_URL: 'http://127.0.0.1:5174/api/auth/google/callback', GOOGLE_CLIENT_ID: 'test-client', GOOGLE_CLIENT_SECRET: 'test-secret',
+    PULSEDESK_TEST_DATABASE_VERIFIED: 'true',
     ATTACHMENT_STORAGE_DIR: fileURLToPath(new URL(`../../.local/test-attachments/${randomUUID()}/`, import.meta.url)),
   };
 }

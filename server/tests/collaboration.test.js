@@ -1,5 +1,5 @@
 import { beforeAll, beforeEach, afterAll, describe, expect, it } from 'vitest';
-import request from 'supertest';
+import request from './helpers/request.js';
 import { app } from '../src/app.js';
 import { prisma } from '../src/utils/prisma.js';
 import { seedSupportUsers, supportUsers } from '../prisma/users.seed.js';
@@ -9,7 +9,7 @@ const userId = supportUsers[0].id;
 let ticket, other;
 const path = (kind, id = ticket.id) => `/api/tickets/${id}/${kind}`;
 const assign = (id = userId) => request(app).post(path('assignees')).send({ userId: id });
-const comment = (content = 'Customer confirmed the issue still occurs.', author = userId) => request(app).post(path('comments')).send({ userId: author, content });
+const comment = (content = 'Customer confirmed the issue still occurs.') => request(app).post(path('comments')).send({ content });
 
 beforeAll(() => { if (process.env.PULSEDESK_TEST_DATABASE_VERIFIED !== 'true') throw new Error('Use the isolated npm test runner.'); });
 beforeEach(async () => {
@@ -144,9 +144,9 @@ describe('plain-text ticket comments', () => {
   });
 
   it('handles missing tickets, missing users, and malformed or unsupported inputs', async () => {
-    expect((await comment('Details', missingId)).body.error.code).toBe('USER_NOT_FOUND');
+    expect((await request(app).post(path('comments')).send({ userId: missingId, content: 'Details' })).status).toBe(400);
     expect((await request(app).get(path('comments', missingId))).status).toBe(404);
-    expect((await request(app).post(path('comments', missingId)).send({ userId, content: 'Details' })).body.error.code).toBe('TICKET_NOT_FOUND');
+    expect((await request(app).post(path('comments', missingId)).send({ content: 'Details' })).body.error.code).toBe('TICKET_NOT_FOUND');
     for (const body of [{ userId }, { userId: 'invalid', content: 'Details' }, { userId, content: 'Details', author: 'spoofed' }]) expect((await request(app).post(path('comments')).send(body)).status).toBe(400);
     expect((await request(app).get('/api/tickets/invalid/comments')).status).toBe(400);
   });
