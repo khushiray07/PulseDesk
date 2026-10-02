@@ -1,6 +1,6 @@
 # PulseDesk
 
-A focused support ticket workspace built with React, Express, Prisma, and PostgreSQL. Create customer requests, find tickets with combined search/filter/sort controls, and update status, priority, and rich-text descriptions. Tickets and attachment metadata persist in PostgreSQL; attachment files use a replaceable local storage adapter.
+A focused support ticket workspace built with React, Express, Prisma, and PostgreSQL. Create customer requests, find tickets with combined search/filter/sort controls, and update status, priority, and rich-text descriptions. Support users can share ticket assignments and post comments. Tickets and attachment metadata persist in PostgreSQL; attachment files use a replaceable local storage adapter.
 
 ## Quick start
 
@@ -36,6 +36,8 @@ Open [http://127.0.0.1:5173](http://127.0.0.1:5173). The API runs on port 5000. 
 
 If using your own PostgreSQL instance, create separate development and test databases and update `server/.env` before migrating. The database does not need to use port 55432; that port keeps this project's optional local instance separate from the usual port 5432.
 
+The seed also makes six deterministic support users available: Khushi Ray, Aisha Sharma, Rohan Mehta, Neha Kapoor, Arjun Rao, and Vikram Singh. User upserts match canonical email and preserve existing IDs and profile edits.
+
 The seed inserts 30 realistic tickets with all nine status/priority combinations and varied timestamps. Re-running it preserves existing tickets and edits; it does not reset your data. Example email domains are fictional.
 
 Fuzzy search requires PostgreSQL's `pg_trgm` extension, enabled by the new migration when you run `npm run db:migrate`. Existing installations should run that command once to apply the enhancement. The database role needs `CREATE` permission on the database to enable this trusted extension; alternatively, a database administrator can enable it before migrations run. See the [PostgreSQL pg_trgm documentation](https://www.postgresql.org/docs/14/pgtrgm.html).
@@ -70,11 +72,11 @@ npm run test:e2e:preview
 npm run build
 ```
 
-`npm test` runs 79 checks with Vitest and Supertest: the original 33 database-backed API tests, six test-database isolation checks, 13 fuzzy-search checks, 13 attachment checks, and 14 rich-text checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors. Fuzzy-search coverage includes title/email typos, literal-match precedence, date sorting, combined filters, multiple pages and out-of-range pages, precise known-email lookup, unchanged response fields, and SQL-looking input.
+`npm test` runs 100 checks with Vitest and Supertest: the original 33 database-backed API tests, six test-database isolation checks, 13 fuzzy-search checks, 13 attachment checks, 14 rich-text checks, and 21 collaboration checks. Coverage includes required-field/email/enum validation, persisted creation and updates, combined title/email search and filters, sorting (including identical creation timestamps), pagination metadata, literal wildcard searches, global counts, and consistent HTTP errors. Fuzzy-search coverage includes title/email typos, literal-match precedence, date sorting, combined filters, multiple pages and out-of-range pages, precise known-email lookup, unchanged response fields, and SQL-looking input.
 
-`npm run test:e2e` runs 23 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, protection against stale search responses, and fuzzy search through the existing dashboard with filters and sorting. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL. Nine content tests cover formatted create/edit/reload, multiple attachments, paste and drag/drop, failed-upload retry without duplicate creation, validation/removal, persisted deletion, legacy descriptions, sanitization, mobile content controls, and JPEG/WEBP content detection/previews.
+`npm run test:e2e` runs 30 Playwright checks against the actual API and React application in Chrome. It verifies creation/update persistence after browser refresh, summary independence, query restoration after navigating to details, inline validation, modal focus/Escape, mobile layouts, loading, empty results, and retry behavior. It also checks retained input after failed mutations, prevention of duplicate submissions, protection against stale search responses, and fuzzy search through the existing dashboard with filters and sorting. Network failures and the empty-dataset UI are simulated with controlled browser routes; the normal create/update/query flows use PostgreSQL. Nine content tests cover formatted create/edit/reload, multiple attachments, paste and drag/drop, failed-upload retry without duplicate creation, validation/removal, persisted deletion, legacy descriptions, sanitization, mobile content controls, and JPEG/WEBP content detection/previews. Seven collaboration tests cover multiple assignment/add/remove/refresh, comments with chosen authors and timestamps, failed comment submission and retained drafts, literal HTML comments, network recovery, assignment removal retry, and mobile layouts.
 
-`npm run test:e2e:preview` builds the production bundle and runs the same 23 browser checks against Vite preview.
+`npm run test:e2e:preview` builds the production bundle and runs the same 30 browser checks against Vite preview.
 
 All test commands require an explicit `TEST_DATABASE_URL` whose database name ends in `_test`. They reject a test URL pointing at the development database, even when connection credentials or URL schema parameters differ. Tests migrate and reset only the test database. Each run also receives a generated `.local/test-attachments/<UUID>` storage directory, overriding any development storage setting, and removes it on completion. Run suites sequentially because they share test fixtures. Browser test servers use ports 5010 and 5174 and shut down afterward; they can run while the development app is open.
 
@@ -107,6 +109,12 @@ Stop the development application with Ctrl+C. Stop the optional native database 
 | GET | `/api/tickets/:id/attachments` | List attachment metadata; 200 |
 | GET | `/api/tickets/:id/attachments/:attachmentId/content` | Image preview or document download; `?download=1` forces download |
 | DELETE | `/api/tickets/:id/attachments/:attachmentId` | Delete file and metadata; 200 or 404 |
+| GET | `/api/users` | List support users in stable name/ID order |
+| GET | `/api/tickets/:id/assignees` | List assignments with user profiles and assignment times |
+| POST | `/api/tickets/:id/assignees` | Assign `{ userId }`; 201, duplicate 409 |
+| DELETE | `/api/tickets/:id/assignees/:userId` | Remove only the assignment; 200 or 404 |
+| GET | `/api/tickets/:id/comments` | List comments oldest first with author profiles |
+| POST | `/api/tickets/:id/comments` | Post plain text `{ userId, content }`; 201 |
 | GET | `/api/health` | Local server availability check |
 
 Example list query:
@@ -158,7 +166,7 @@ Express routes -> controllers -> Zod validation
                Prisma -> PostgreSQL
 ```
 
-The modular monolith has one ticket domain with `Ticket` and `Attachment` tables. HTTP handling, validation, database queries, and error handling are separated. `server/src/app.js` can be tested without opening a port; `server/src/server.js` handles startup and shutdown. SQL migration files include enum/length/nonblank constraints and a creation-date/ID index.
+The modular monolith has one ticket domain with `Ticket`, `Attachment`, `User`, `TicketAssignee`, and `Comment` models. HTTP handling, validation, database queries, and error handling are separated. `server/src/app.js` can be tested without opening a port; `server/src/server.js` handles startup and shutdown. SQL migration files include enum/length/nonblank constraints and a creation-date/ID index.
 
 List results and matching counts use a repeatable-read transaction so pagination metadata describes the same database snapshot. Search uses parameterized `Prisma.sql` / `$queryRaw` queries inside the existing ticket service to access trigram functions and ranking; user input is bound as data. Lists without search continue to use the existing Prisma model queries. Summary uses one unfiltered grouped query. There is no in-memory data store or frontend pagination. The extension migration changes no ticket fields or existing data; no new indexes are needed for the assignment's small dataset. Prisma 6 is pinned to match the schema-based configuration used here; the transitive `deepmerge-ts` dependency is overridden to its patched 8.x release and verified with generation, migrations, and tests. See the [Prisma 6 data-source documentation](https://docs.prisma.io/docs/orm/v6/prisma-schema/overview/data-sources).
 
@@ -182,6 +190,20 @@ The backend uses [sanitize-html](https://github.com/apostrophecms/sanitize-html)
 
 Local storage serves a single application instance; shared/multiple-instance deployments need a shared volume or object-storage adapter. File signature checks are type validation, not malware scanning. There is no antivirus service, authentication, resumable upload, or distributed transaction between files and PostgreSQL. Ordinary write failures have compensation, but abrupt process/host failures can leave orphan files that require operational cleanup. Any future ticket-deletion service must remove associated files as well as cascading metadata.
 
+## Collaboration: users, multiple assignees, and comments
+
+Upgrade with `npm run db:generate`, `npm run db:migrate`, and `npm run db:seed`. The single additive `20261002020000_add_collaboration` migration creates `users`, `ticket_assignees`, and `comments`; it does not alter existing ticket/attachment columns or reset data. Existing tickets have zero assignments and comments. The ticket seed is unchanged apart from calling a separate deterministic user seed. There are no passwords, sessions, roles, login routes, or Google integration.
+
+`User` has a UUID identity, name, unique canonical lowercase/trimmed email, optional avatar URL, and creation/update timestamps. Comments and assignments reference this stable UUID; future authentication can resolve an authenticated principal to the same User instead of replacing collaboration relationships. Any future user-creation/profile-writing code must normalize email before persistence. Seeded email domains are fictional, and seed upserts preserve existing identities and profile edits.
+
+`TicketAssignee` is an explicit join model with `(ticketId, userId)` as its primary key and `assignedAt`. The database rejects duplicates even for concurrent requests; the API returns `409 ALREADY_ASSIGNED`. Removing an assignment leaves its ticket and user intact. Assignments list by assignment time and user ID. Missing tickets/users and malformed UUIDs use the existing structured error format. Assignee chips and a keyboard-accessible Add chooser hide users already assigned. HTTPS avatars render when available, with initials as fallback for missing/failed images. Loading/error/retry states remain local to the collaboration panels.
+
+`Comment` has a UUID, ticket/user foreign keys, plain-text content, and creation/update timestamps. An **explicit Comment author dropdown** selects a support User for now. This is a temporary manual-author mechanism, not verified identity. When authentication arrives, the controller can derive `userId` from the authenticated principal while reusing the model/service relationship. Comments reject blank or invisible-only text and have a 5,000-character maximum; HTML-looking text renders literally through React, without HTML parsing. Comments list oldest first with an ID tie-breaker, and include their author's profile and timestamp.
+
+The comment form preserves the selected author and draft on failure, disables inputs and duplicate submissions while pending, clears the draft only on success, and reloads comments afterward. Assignments and comments persist independently of ticket properties, attachments, and description updates. Collaboration modules have dedicated routes, controllers, validators, and services; the existing ticket controller and fuzzy-search service are unchanged.
+
+Ticket foreign keys cascade collaboration records when a ticket is deleted at the database boundary. Assignment-user deletion cascades only assignment rows, while comment-user deletion is restricted to preserve authorship. No user/ticket deletion endpoint is added. Comment edit/delete, dashboard assignee filtering, real-time synchronization, comment pagination, and authenticated author verification are intentionally absent. Large comment histories will need separate pagination work. No new dependencies are introduced.
+
 ## Assumptions and limitations
 
 - Medium is preselected in the create form as an implementation assumption; the API requires priority explicitly.
@@ -189,7 +211,7 @@ Local storage serves a single application instance; shared/multiple-instance dep
 - Creating a ticket opens its detail page so it can be found even when active queue filters would exclude it. Returning restores the previous queue query and refreshes its data.
 - Timestamps are stored with timezone support and displayed in the browser's local timezone. Seed dates are relative to the first seed run and remain stable on subsequent runs.
 - The small Needs Attention dot is derived from HIGH priority and OPEN status; it is not a stored field or an additional query mode.
-- Comments, users, authentication, Google login, assignments, notifications, analytics, audit history, ticket deletion, and deployment remain outside this enhancement's scope.
+- Authentication, Google login, Gmail integration, notifications, analytics, audit history, ticket deletion, and deployment remain outside this enhancement's scope.
 - Concurrent edits use last-write-wins behavior. There is no real-time synchronization or optimistic concurrency control.
 - Querying uses exact, substring, and trigram matching with offset pagination, which suit the assignment dataset; large datasets would need separate performance work.
 - The native PostgreSQL path was verified with PostgreSQL 14.17 on macOS. Docker Compose is provided as an alternative; Docker startup was not verified here because its daemon was unavailable.
