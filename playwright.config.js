@@ -14,7 +14,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: [
-    { command: 'npm run start -w server', url: 'http://127.0.0.1:5010/api/health', env: { PORT: '5010', DATABASE_URL: process.env.DATABASE_URL }, reuseExistingServer: false, timeout: 30000 },
+    { command: 'node server/tests/e2e-server.mjs', url: 'http://127.0.0.1:5010/api/health', env: { PORT: '5010', DATABASE_URL: process.env.DATABASE_URL }, reuseExistingServer: false, timeout: 30000 },
     { command: process.env.PULSEDESK_E2E_PREVIEW === 'true' ? 'npm run preview -w client -- --port 5174 --strictPort' : 'npm run dev -w client -- --port 5174', url: 'http://127.0.0.1:5174', env: { API_PROXY_TARGET: 'http://127.0.0.1:5010' }, reuseExistingServer: false, timeout: 30000 },
   ],
 });

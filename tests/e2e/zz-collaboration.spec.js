@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 const khushiId = '50000000-0000-4000-8000-000000000001';
 const aishaId = '50000000-0000-4000-8000-000000000002';
@@ -41,31 +41,29 @@ test('adds two assignees, hides assigned users from the chooser, removes one, an
   expect(assignments.map((assignment) => assignment.userId)).toEqual([aishaId]);
 });
 
-test('posts comments with selected authors, timestamps and stable ordering, and persists alongside assignees', async ({ page }) => {
+test('posts comments with the authenticated author, timestamps and stable ordering, and persists alongside assignees', async ({ page }) => {
   await openTicket(page, 'Comments and assignees together');
   await chooseAssignee(page, 'Khushi Ray');
   await chooseAssignee(page, 'Aisha Sharma');
-  await page.getByLabel('Comment author').selectOption(khushiId);
   await page.getByLabel('Write a comment').fill('Customer confirmed the issue still occurs.');
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   const comments = page.getByRole('list', { name: 'Ticket comments' });
   await expect(comments.getByRole('listitem')).toHaveCount(1);
   await expect(comments.getByRole('listitem').first()).toContainText('Khushi Ray');
   await expect(page.getByLabel('Write a comment')).toHaveValue('');
-  await page.getByLabel('Comment author').selectOption(aishaId);
   await page.getByLabel('Write a comment').fill('I reproduced this in the latest build.');
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   await expect(comments.getByRole('listitem')).toHaveCount(2);
   await page.reload();
   await expect(comments.getByRole('listitem')).toHaveCount(2);
   await expect(comments.getByRole('listitem').first()).toContainText('Customer confirmed');
-  await expect(comments.getByRole('listitem').nth(1)).toContainText('Aisha Sharma');
+  await expect(comments.getByRole('listitem').nth(1)).toContainText('Khushi Ray');
   await expect(comments.locator('time').first()).toHaveAttribute('datetime', /\d{4}-\d{2}-\d{2}T/);
   await expect(page.getByRole('button', { name: 'Remove assignee Khushi Ray' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Remove assignee Aisha Sharma' })).toBeVisible();
 });
 
-test('retains the draft and author after a failed submission, prevents duplicates, and recovers on retry', async ({ page }) => {
+test('retains the draft and signed-in author after a failed submission, prevents duplicates, and recovers on retry', async ({ page }) => {
   const ticket = await openTicket(page, 'Comment retry request');
   let release;
   let submissions = 0;
@@ -75,16 +73,14 @@ test('retains the draft and author after a failed submission, prevents duplicate
     submissions++;
     await pending; await route.abort();
   });
-  await page.getByLabel('Comment author').selectOption(khushiId);
   await page.getByLabel('Write a comment').fill('Keep this investigation update on failure.');
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Adding comment…', exact: true })).toBeDisabled();
   await expect(page.getByLabel('Write a comment')).toBeDisabled();
-  expect(submissions).toBe(1);
+  await expect.poll(() => submissions).toBe(1);
   release();
   await expect(page.locator('.comments-card').getByRole('alert')).toContainText('We couldn’t reach the server');
   await expect(page.getByLabel('Write a comment')).toHaveValue('Keep this investigation update on failure.');
-  await expect(page.getByLabel('Comment author')).toHaveValue(khushiId);
   await page.unroute(`**/api/tickets/${ticket.id}/comments`);
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   await expect(page.getByRole('list', { name: 'Ticket comments' }).getByRole('listitem')).toHaveCount(1);
@@ -92,12 +88,9 @@ test('retains the draft and author after a failed submission, prevents duplicate
   await expect(page.getByRole('list', { name: 'Ticket comments' })).toContainText('Keep this investigation update on failure.');
 });
 
-test('rejects missing authors and whitespace-only comments, and renders HTML-looking comments literally', async ({ page }) => {
+test('uses the signed-in author, rejects whitespace-only comments, and renders HTML-looking comments literally', async ({ page }) => {
   await openTicket(page, 'Comment validation request');
-  await page.getByLabel('Write a comment').fill('A support update');
-  await page.getByRole('button', { name: 'Add comment', exact: true }).click();
-  await expect(page.locator('.comments-card').getByRole('alert')).toHaveText('Choose a comment author.');
-  await page.getByLabel('Comment author').selectOption(khushiId);
+  await expect(page.getByLabel('Comment author')).toHaveCount(0);
   await page.getByLabel('Write a comment').fill('   ');
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   await expect(page.locator('.comments-card').getByRole('alert')).toHaveText('Enter a comment.');
@@ -118,7 +111,7 @@ test('shows recoverable loading/errors for users, assignments and comments witho
   await page.goto(`/tickets/${ticket.id}`);
   await expect(page.getByRole('heading', { name: ticket.title })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Add assignee', exact: true })).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Add comment', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Add comment', exact: true })).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Retry assignees', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Retry comments', exact: true })).toBeVisible();
   await page.unroute('**/api/users');
@@ -150,7 +143,6 @@ test('keeps collaboration usable on mobile and persists comments and multiple as
   await openTicket(page, 'Mobile team collaboration');
   await chooseAssignee(page, 'Khushi Ray');
   await chooseAssignee(page, 'Aisha Sharma');
-  await page.getByLabel('Comment author').selectOption(khushiId);
   await page.getByLabel('Write a comment').fill('Mobile customer update with a long reference: ' + 'a'.repeat(120));
   await page.getByRole('button', { name: 'Add comment', exact: true }).click();
   await expect(page.getByRole('list', { name: 'Ticket comments' })).toContainText('Mobile customer update');

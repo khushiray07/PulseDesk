@@ -16,7 +16,7 @@ run(require.resolve('prisma/build/index.js'), ['migrate', 'deploy'], 'server');
 Object.assign(process.env, env);
 const { PrismaClient } = await import('@prisma/client');
 const prisma = new PrismaClient();
-try { await prisma.ticket.deleteMany(); } finally { await prisma.$disconnect(); }
+try { await prisma.ticket.deleteMany(); await prisma.user.deleteMany(); await prisma.session.deleteMany(); } finally { await prisma.$disconnect(); }
 run('prisma/seed.js', [], 'server');
 try {
   run(require.resolve('@playwright/test/cli'), ['test', ...args.filter((argument) => argument !== '--preview')]);
