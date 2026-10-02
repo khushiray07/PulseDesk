@@ -25,7 +25,7 @@ function Shell({ children }) {
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="app-header">
       <div className="header-inner">
-        <Link to="/dashboard" className="brand" aria-label="PulseDesk dashboard"><span className="brand-mark"><Activity size={23} strokeWidth={2.2} /></span><span>PulseDesk<span className="brand-dot">.</span></span></Link>
+        <button type="button" className="brand" aria-label="Reload PulseDesk" onClick={() => window.location.reload()}><span className="brand-mark"><Activity size={23} strokeWidth={2.2} /></span><span>PulseDesk</span></button>
         <span className="workspace-label">Support workspace</span>
         <Link className="header-link" to="/dashboard">Ticket dashboard <ArrowRight size={15} /></Link><div className="header-user"><UserAvatar user={user} /><span>{user.name}</span><button className="button secondary compact" disabled={signingOut} onClick={logout}>{signingOut ? 'Signing out…' : 'Sign out'}</button></div>
       </div>
