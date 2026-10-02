@@ -1,4 +1,5 @@
 import { prisma } from '../src/utils/prisma.js';
+import { seedSupportUsers } from './users.seed.js';
 
 const titles = [
   'Payment gateway timeout during checkout',
@@ -39,6 +40,8 @@ const priorities = ['HIGH', 'MEDIUM', 'LOW'];
 const now = Date.now();
 
 try {
+  await seedSupportUsers(prisma);
+  console.log('6 support users are available. Existing user identities and profiles were preserved.');
   await prisma.$transaction(titles.map((title, i) => {
     const id = `10000000-0000-4000-8000-${String(i + 1).padStart(12, '0')}`;
     const createdAt = new Date(now - (i * 3 + 1) * 60 * 60 * 1000);
