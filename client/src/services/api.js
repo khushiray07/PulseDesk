@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const api = axios.create({ baseURL: '/api', timeout: 15000 });
+export const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE_URL || '/api', timeout: 15000, withCredentials: true });
+export const apiUrl = (path) => api.getUri({ url: path });
 let tokenRequest;
 export function resetCsrfToken() { tokenRequest = undefined; }
 api.interceptors.request.use(async (config) => {
@@ -25,7 +26,7 @@ export const uploadAttachment = async (id, file) => {
   return (await api.post(`/tickets/${id}/attachments`, body, { timeout: 30000 })).data.data;
 };
 export const deleteAttachment = async (id, attachmentId) => (await api.delete(`/tickets/${id}/attachments/${attachmentId}`)).data.data;
-export const attachmentContentUrl = (id, attachmentId, download = false) => `/api/tickets/${id}/attachments/${attachmentId}/content${download ? '?download=1' : ''}`;
+export const attachmentContentUrl = (id, attachmentId, download = false) => apiUrl(`/tickets/${id}/attachments/${attachmentId}/content${download ? '?download=1' : ''}`);
 export const addAssignee = async (id, userId) => (await api.post(`/tickets/${id}/assignees`, { userId })).data.data;
 export const removeAssignee = async (id, userId) => (await api.delete(`/tickets/${id}/assignees/${userId}`)).data.data;
 export const addComment = async (id, data) => (await api.post(`/tickets/${id}/comments`, data)).data.data;

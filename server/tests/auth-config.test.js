@@ -14,6 +14,8 @@ describe('production auth configuration', () => {
     { SESSION_SECRET: '' }, { SESSION_SECRET: 'short' },
     { GOOGLE_CLIENT_ID: '' }, { GOOGLE_CLIENT_SECRET: '' },
     { APP_ORIGIN: 'http://support.example.com', GOOGLE_CALLBACK_URL: 'http://support.example.com/api/auth/google/callback' },
+    { APP_ORIGIN: 'https://localhost', GOOGLE_CALLBACK_URL: 'https://localhost/api/auth/google/callback' },
+    { APP_ORIGIN: 'https://127.0.0.1', GOOGLE_CALLBACK_URL: 'https://127.0.0.1/api/auth/google/callback' },
     { GOOGLE_CALLBACK_URL: 'https://attacker.example.com/api/auth/google/callback' },
     { GOOGLE_CALLBACK_URL: 'https://support.example.com/unexpected' },
   ])('fails closed with invalid production configuration: %j', (overrides) => { expect(() => run(overrides)).toThrow(); });

@@ -8,7 +8,8 @@ const callback = new URL(process.env.GOOGLE_CALLBACK_URL || '/api/auth/google/ca
 if (origin.origin !== callback.origin || callback.pathname !== '/api/auth/google/callback' || callback.search || callback.hash) {
   throw new Error('GOOGLE_CALLBACK_URL must be the app origin followed by /api/auth/google/callback.');
 }
-if (production && (origin.protocol !== 'https:' || !process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)) {
+const loopback = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0'].includes(origin.hostname) || origin.hostname.endsWith('.localhost');
+if (production && (origin.protocol !== 'https:' || loopback || !process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)) {
   throw new Error('Production authentication requires HTTPS APP_ORIGIN and Google OAuth credentials.');
 }
 export const authConfig = Object.freeze({

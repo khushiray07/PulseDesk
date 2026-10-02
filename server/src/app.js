@@ -6,11 +6,13 @@ import { AppError } from './utils/app-error.js';
 import { sessionMiddleware } from './auth/session.js';
 import { authRouter } from './auth/routes.js';
 import { requireAuth, requireCsrf } from './auth/middleware.js';
+import { apiCors } from './middleware/cors.middleware.js';
 
 export function createApp({ provider } = {}) {
   const app = express();
   app.disable('x-powered-by');
   if (process.env.TRUST_PROXY === '1') app.set('trust proxy', 1);
+  app.use('/api', apiCors);
   app.use(express.json({ limit: '1mb' }));
   app.get('/api/health', (_req, res) => res.json({ success: true, data: { status: 'ok' } }));
   app.use(sessionMiddleware());
