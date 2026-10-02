@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, CalendarDays, Mail, FileText, SlidersHorizontal, Check, LoaderCircle, AlertCircle, Clock3 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, Mail, SlidersHorizontal, Check, LoaderCircle, AlertCircle, Clock3 } from 'lucide-react';
 import { useResource } from '../hooks/useResource.js';
 import { updateTicket, errorMessage } from '../services/api.js';
 import { fullDate, shortId, PRIORITY_LABELS, STATUS_LABELS } from '../utils/tickets.js';
 import { PriorityBadge, StatusBadge } from '../components/Badge.jsx';
 import { ErrorState } from '../components/States.jsx';
 import { useToast } from '../components/Toast.jsx';
+import DescriptionSection from '../components/DescriptionSection.jsx';
+import AttachmentSection from '../components/AttachmentSection.jsx';
+import { useAttachmentQueue } from '../hooks/useAttachmentQueue.js';
 
 function UpdateForm({ ticket, onSaved }) {
   const [status, setStatus] = useState(ticket.status);
@@ -30,9 +33,11 @@ function UpdateForm({ ticket, onSaved }) {
 
 function TicketContent({ initialTicket }) {
   const [ticket, setTicket] = useState(initialTicket);
+  const attachments = useResource(`/tickets/${ticket.id}/attachments`);
+  const queue = useAttachmentQueue(attachments.data?.length || 0);
   return <>
     <div className="detail-heading"><div className="detail-id-row"><span className="detail-ticket-id">{shortId(ticket.id)}</span><StatusBadge value={ticket.status} /><PriorityBadge value={ticket.priority} /></div><h1>{ticket.title}</h1><p className="detail-subtitle"><Mail size={15} /><a href={`mailto:${ticket.customerEmail}`}>{ticket.customerEmail}</a><span className="metadata-dot">·</span><span>Created {fullDate(ticket.createdAt)}</span></p></div>
-    <div className="detail-grid"><div className="detail-main"><section className="detail-card description-card"><div className="detail-card-heading"><FileText size={19} /><h2>Issue description</h2></div><p className="description-body">{ticket.description}</p></section><section className="detail-card customer-card"><div className="detail-card-heading"><Mail size={18} /><h2>Customer details</h2></div><div className="customer-detail"><span className="customer-avatar large">{ticket.customerEmail[0].toUpperCase()}</span><div><span className="metadata-label">CUSTOMER EMAIL</span><a href={`mailto:${ticket.customerEmail}`}>{ticket.customerEmail}<ArrowUpRight size={14} /></a></div></div></section><section className="detail-card timestamps-card"><div><CalendarDays size={18} /><div><span className="metadata-label">CREATED</span><time dateTime={ticket.createdAt}>{fullDate(ticket.createdAt)}</time></div></div><div><Clock3 size={18} /><div><span className="metadata-label">LAST UPDATED</span><time dateTime={ticket.updatedAt}>{fullDate(ticket.updatedAt)}</time></div></div></section></div><aside><UpdateForm ticket={ticket} onSaved={setTicket} /><div className="record-note"><span className="metadata-label">TICKET IDENTIFIER</span><code>{ticket.id}</code><p>Ticket title, description, and customer email are recorded at creation.</p></div></aside></div>
+    <div className="detail-grid"><div className="detail-main"><DescriptionSection ticket={ticket} onSaved={setTicket} onPasteFiles={queue.handlePaste} onDropFiles={queue.handleDrop} /><AttachmentSection ticketId={ticket.id} resource={attachments} queue={queue} /><section className="detail-card customer-card"><div className="detail-card-heading"><Mail size={18} /><h2>Customer details</h2></div><div className="customer-detail"><span className="customer-avatar large">{ticket.customerEmail[0].toUpperCase()}</span><div><span className="metadata-label">CUSTOMER EMAIL</span><a href={`mailto:${ticket.customerEmail}`}>{ticket.customerEmail}<ArrowUpRight size={14} /></a></div></div></section><section className="detail-card timestamps-card"><div><CalendarDays size={18} /><div><span className="metadata-label">CREATED</span><time dateTime={ticket.createdAt}>{fullDate(ticket.createdAt)}</time></div></div><div><Clock3 size={18} /><div><span className="metadata-label">LAST UPDATED</span><time dateTime={ticket.updatedAt}>{fullDate(ticket.updatedAt)}</time></div></div></section></div><aside><UpdateForm ticket={ticket} onSaved={setTicket} /><div className="record-note"><span className="metadata-label">TICKET IDENTIFIER</span><code>{ticket.id}</code><p>Ticket title and customer email are recorded at creation. Descriptions can be updated as new details arrive.</p></div></aside></div>
   </>;
 }
 

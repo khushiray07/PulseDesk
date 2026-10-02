@@ -193,11 +193,60 @@ tbody tr:nth-child(3n + 3) .customer-avatar { background: #eaf4f4; color: #7a9e9
 .detail-subtitle a:hover { color: #4f46e5; }
 .metadata-dot { margin: 0 5px; }
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 25px; }
-.detail-main { display: flex; flex-direction: column; gap: 20px; }
+.detail-main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 .detail-card { background: #fff; border: 1px solid #e5e9f3; border-radius: 12px; padding: 26px; }
 .detail-card-heading { display: flex; align-items: center; gap: 10px; color: #8f98ae; }
 .detail-card-heading h2 { color: #55617b; font-size: 14px; font-weight: 600; }
 .description-body { color: #64748b; font-size: 13px; line-height: 2; white-space: pre-wrap; overflow-wrap: anywhere; padding: 23px 0 5px; min-height: 160px; }
+.ticket-fields { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 19px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.rich-editor { border: 1px solid #e0e5ef; border-radius: 7px; overflow: hidden; background: #fff; }
+.rich-editor:focus-within { border-color: #a5b4fc; box-shadow: 0 0 0 3px #6366f115; }
+.rich-editor.invalid { border-color: #eaa0ac; }
+.editor-toolbar { display: flex; gap: 3px; padding: 6px; border-bottom: 1px solid #e0e5ef; background: #fafbff; flex-wrap: wrap; }
+.editor-toolbar button { width: 31px; height: 30px; border: 0; border-radius: 4px; background: transparent; color: #5c6880; display: grid; place-items: center; }
+.editor-toolbar button:hover, .editor-toolbar button[aria-pressed="true"] { background: #e9edff; color: #4f46e5; }
+.editor-toolbar button:disabled { opacity: .4; cursor: default; }
+.rich-editor .tiptap { padding: 12px; min-height: 120px; outline: none; font-size: 13px; line-height: 1.8; color: #4d5c75; overflow-wrap: anywhere; }
+.rich-editor .tiptap[contenteditable="false"] { background: #f8fafc; }
+.rich-editor p + p, .rich-content p + p { margin-top: 8px; }
+.rich-editor ul, .rich-content ul { list-style: disc; padding-left: 24px; }
+.rich-editor ol, .rich-content ol { list-style: decimal; padding-left: 24px; }
+.rich-editor code, .rich-content code { font-family: ui-monospace, monospace; background: #eef0f7; border-radius: 3px; padding: 2px 4px; }
+.rich-editor pre, .rich-content pre { overflow-x: auto; white-space: pre-wrap; padding: 12px; border-radius: 6px; background: #eef0f7; }
+.rich-editor a, .rich-content a { color: #4f46e5; text-decoration: underline; }
+.rich-content { white-space: normal; }
+.editor-link { padding: 10px; border-bottom: 1px solid #e0e5ef; font-size: 12px; }
+.editor-link > div { display: flex; gap: 6px; margin-top: 5px; }
+.editor-link input { flex: 1; min-width: 0; }
+.editor-link button { border: 1px solid #e0e5ef; border-radius: 5px; background: #fff; padding: 4px 8px; }
+.editor-link p { color: #64748b; margin-top: 4px; }
+.description-card .detail-card-heading { flex-wrap: wrap; }
+.description-card .detail-card-heading .compact { margin-left: auto; }
+.button.compact { font-size: 11px; padding: 6px 9px; min-height: 30px; }
+.description-edit { padding-top: 18px; }
+.description-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; flex-wrap: wrap; }
+.attachment-uploader { display: grid; gap: 10px; }
+.attachment-dropzone { display: grid; justify-items: center; gap: 7px; width: 100%; min-width: 0; border: 1px dashed #b9c4e2; border-radius: 9px; padding: 20px 12px; background: #fafbff; color: #64748b; font-size: 12px; text-align: center; }
+.attachment-dropzone strong { color: #4d5c75; font-size: 13px; }
+.attachment-dropzone small { font-size: 10px; }
+.attachment-dropzone:hover, .attachment-dropzone.dragging { border-color: #6366f1; background: #eff1ff; }
+.attachment-dropzone:disabled { opacity: .6; cursor: default; }
+.attachment-list { padding: 0; margin: 0; list-style: none; display: grid; gap: 9px; }
+.attachment-list li { display: flex; gap: 10px; align-items: center; padding: 10px; border: 1px solid #e0e5ef; border-radius: 7px; min-width: 0; color: #64748b; }
+.attachment-list li > svg { flex-shrink: 0; }
+.attachment-info { flex: 1; min-width: 0; display: grid; gap: 3px; font-size: 11px; overflow-wrap: anywhere; }
+.attachment-info strong { color: #4d5c75; font-size: 12px; }
+.attachment-info .field-error { font-size: 11px; }
+.attachment-thumbnail { width: 42px; height: 42px; object-fit: cover; border-radius: 5px; flex-shrink: 0; }
+.attachment-check { color: #059669; }
+.attachment-status { color: #64748b; }
+.attachments-card > .attachment-list, .attachments-card > p, .attachments-card > .form-alert { margin: 17px 0; }
+.attachments-card .attachment-uploader { margin-top: 18px; }
+.attachment-empty { font-size: 12px; color: #64748b; }
+.attachment-upload-button { margin-top: 12px; }
+.created-ticket-note { font-size: 12px; line-height: 1.7; color: #64748b; }
+.created-ticket-note button { border: none; padding: 0; background: none; color: #4f46e5; text-decoration: underline; }
 .customer-detail { display: flex; align-items: center; gap: 14px; margin-top: 21px; min-width: 0; }
 .customer-avatar.large { width: 42px; height: 42px; font-size: 15px; background: #eef2ff; color: #8d91ba; }
 .customer-detail > div { min-width: 0; }

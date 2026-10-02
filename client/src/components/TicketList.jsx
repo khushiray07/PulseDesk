@@ -1,10 +1,11 @@
+import { descriptionText } from '../utils/description.js';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { PriorityBadge, StatusBadge } from './Badge.jsx';
 import { fullDate, relativeDate, shortId } from '../utils/tickets.js';
 
 function TicketTitle({ ticket, target }) {
-  return <div className="ticket-title-cell"><span className="ticket-number">{shortId(ticket.id)}{ticket.priority === 'HIGH' && ticket.status === 'OPEN' && <span className="attention-dot" title="Needs attention: High priority and Open" aria-label="Needs attention" />}</span><Link to={target} className="ticket-title">{ticket.title}</Link><p className="ticket-excerpt">{ticket.description}</p></div>;
+  return <div className="ticket-title-cell"><span className="ticket-number">{shortId(ticket.id)}{ticket.priority === 'HIGH' && ticket.status === 'OPEN' && <span className="attention-dot" title="Needs attention: High priority and Open" aria-label="Needs attention" />}</span><Link to={target} className="ticket-title">{ticket.title}</Link><p className="ticket-excerpt">{descriptionText(ticket.description)}</p></div>;
 }
 export default function TicketList({ tickets, returnTo }) {
   const target = (ticket) => `/tickets/${ticket.id}?returnTo=${encodeURIComponent(returnTo)}`;

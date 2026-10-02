@@ -165,7 +165,7 @@ test('failed creation retains input, prevents duplicate submission and recovers 
   await expect(modal.getByRole('alert')).toContainText('We couldn’t reach the server');
   await expect(modal.getByLabel('Ticket title')).toHaveValue('Creation retry customer request');
   await expect(modal.getByLabel('Customer email')).toHaveValue('retry@example.com');
-  await expect(modal.getByLabel('Description')).toHaveValue('Keep these details when the server cannot be reached.');
+  await expect(modal.getByLabel('Description')).toHaveText('Keep these details when the server cannot be reached.');
   await page.unroute('**/api/tickets');
   await modal.getByRole('button', { name: 'Create ticket', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Creation retry customer request' })).toBeVisible();
