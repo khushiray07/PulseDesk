@@ -12,15 +12,20 @@
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
+    "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.2.3",
     "entities": "^8.1.0",
     "express": "^5.1.0",
+    "express-session": "^1.19.0",
     "file-type": "^22.1.1",
     "multer": "^2.4.0",
+    "openid-client": "^6.8.8",
+    "pg": "^8.23.1",
     "sanitize-html": "^2.18.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "cookie-signature": "^1.2.2",
     "prisma": "6.19.3",
     "supertest": "^7.1.4",
     "vitest": "^4.0.0"

@@ -55,12 +55,24 @@ model User {
   name        String   @db.VarChar(120)
   email       String   @unique @db.VarChar(255)
   avatarUrl   String?  @map("avatar_url") @db.VarChar(2048)
+  googleSubject String? @unique @map("google_subject") @db.VarChar(255)
+  lastLoginAt DateTime? @map("last_login_at") @db.Timestamptz(3)
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
   assignments TicketAssignee[]
   comments    Comment[]
 
   @@map("users")
+}
+
+// Managed by connect-pg-simple; contains session identity, never Google tokens.
+model Session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire])
+  @@map("sessions")
 }
 
 model TicketAssignee {
