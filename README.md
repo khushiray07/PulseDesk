@@ -1,6 +1,69 @@
 # PulseDesk
 
-A focused support ticket workspace built with React, Express, Prisma, and PostgreSQL. Create customer requests, find tickets with combined search/filter/sort controls, and update status, priority, and rich-text descriptions. Support agents sign in with Google, share ticket assignments, and post comments under their verified identity. Tickets and attachment metadata persist in PostgreSQL; attachment files use a replaceable local storage adapter.
+PulseDesk is a full-stack support ticket management dashboard built for the technical assignment. It allows support teams to create, search, filter, prioritize, update, and resolve customer requests through a centralized workspace. Built with React, Express, Prisma, and PostgreSQL.
+
+## Core assignment features
+
+- Create support tickets with a title, description, customer email, and priority; new tickets start with an Open status.
+- Frontend and backend validation for required fields, email addresses, and allowed values.
+- Search by ticket title or customer email.
+- Filter by status and priority together with search.
+- Sort by newest or oldest creation date.
+- Backend pagination with 10 tickets per page and accurate result counts.
+- Ticket detail view with complete customer and issue information.
+- Update ticket status and priority, including resolving requests.
+- Global total, open, in-progress, and resolved counts, independent of queue filters.
+- Responsive desktop and mobile layouts.
+- Loading, empty, and error states with retry controls.
+- PostgreSQL persistence across refreshes and server restarts.
+- Seed data for exploring the workflow.
+- Automated API, database-isolation, and browser tests.
+
+## Additional enhancements
+
+The original assignment requirements were completed first. These optional enhancements were added afterward:
+
+- Typo-tolerant fuzzy search using PostgreSQL `pg_trgm`.
+- Rich-text descriptions with formatting and sanitization.
+- File, image, PDF, and TXT attachments.
+- Click-to-select, drag-and-drop, and clipboard-paste uploads.
+- Multiple ticket assignees.
+- Internal comments attributed to the signed-in support agent.
+- Google OAuth / OpenID Connect authentication with protected pages and APIs.
+
+## Screenshots
+
+Captured from the running application using fictional seed/test data. The ticket detail view also shows multiple assignees and an authenticated comment.
+
+### Dashboard
+
+![PulseDesk dashboard](screenshots/dashboard.png)
+
+### Create Ticket
+
+![Create ticket with rich-text description and attachments](screenshots/create-ticket.png)
+
+### Ticket Details
+
+![Ticket details with assignments and comments](screenshots/ticket-detail.png)
+
+### Fuzzy Search
+
+The misspelled query `pasword` finds a password-reset ticket while status, priority, and sorting controls remain active.
+
+![Fuzzy ticket search](screenshots/fuzzy-search.png)
+
+### Google Login
+
+![PulseDesk Google sign-in screen](screenshots/login.png)
+
+## Demo
+
+A short demonstration video covering the complete ticket workflow can be added here:
+
+[Watch the PulseDesk demo](ADD_DEMO_LINK_HERE)
+
+**Before submission:** replace `ADD_DEMO_LINK_HERE` with your Loom or Google Drive video URL and verify that reviewers can access it.
 
 ## Quick start
 
@@ -270,6 +333,12 @@ Production needs HTTPS, a stable secret shared by application instances, a produ
 
 There are no roles, invitations, agent allowlists, administrative onboarding, account unlinking, or global sign-out from every device in this phase. With External consent, any verified Google account permitted by that project's audience can create a support user and access the dashboard. For a private organization, choose an Internal Workspace audience; a stricter application-level admission policy is separate work. Signing out invalidates the current PulseDesk session, not the user's Google account. Google/network availability is required for new logins; already authenticated requests use local database sessions.
 
+## Scope distinction
+
+The original assignment requirements were completed first.
+
+Fuzzy search, attachments, rich-text editing, multiple assignees, internal comments, and Google authentication are optional enhancements added afterward to demonstrate how the application could evolve into a more realistic support workflow. They were not required by the original assignment.
+
 ## Assumptions and limitations
 
 - Medium is preselected in the create form as an implementation assumption; the API requires priority explicitly.
@@ -282,8 +351,37 @@ There are no roles, invitations, agent allowlists, administrative onboarding, ac
 - Querying uses exact, substring, and trigram matching with offset pagination, which suit the assignment dataset; large datasets would need separate performance work.
 - The native PostgreSQL path was verified with PostgreSQL 14.17 on macOS. Docker Compose is provided as an alternative; Docker startup was not verified here because its daemon was unavailable.
 
-## Project references and time spent
+## AI-assisted development
+
+AI-assisted development tools were used during the project for planning, implementation support, debugging, test-case generation, and code review.
+
+The architecture, implementation decisions, integrations, and final code were reviewed and verified through automated and manual testing. The database schema, API design, frontend flows, authentication, search, attachments, collaboration features, and tests are documented in this repository for review and discussion.
+
+## Time spent
+
+Core assignment implementation: approximately **X hours**.
+
+Optional enhancements and additional testing: approximately **Y hours**.
+
+**Before submission:** replace `X` and `Y` with truthful values based on your own time records. These placeholders are not estimates.
+
+The original 4–6 hour assignment window was used to prioritize the required ticket-management workflow first. Additional enhancements such as fuzzy search, attachments, rich-text descriptions, collaboration features, and Google authentication were implemented afterward.
+
+## Project references
 
 Requirements: [PRD](docs/PulseDesk_PRD.pdf). Architecture: [architecture.md](docs/architecture.md). Milestones and acceptance mapping: [development-plan.md](docs/development-plan.md). Static visual references remain in `design/`.
 
-Time spent: approximately 35 minutes of active implementation and verification across the development sessions, excluding the earlier planning discussion and time between sessions. The PRD's 4-6 hours was used as a scope limit, not a reason to add unrelated features.
+## Submission checklist
+
+- [x] Application source code
+- [x] Database migrations
+- [x] Seed instructions
+- [x] Setup instructions
+- [x] Environment variable documentation
+- [x] Test instructions
+- [x] Technical choices
+- [x] Assumptions
+- [x] Known limitations
+- [ ] Final time-spent values reviewed
+- [ ] Demo video link added
+- [x] Screenshots included
