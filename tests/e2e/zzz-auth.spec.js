@@ -88,8 +88,17 @@ test('an expired browser session returns to login', async ({ page }) => {
 });
 
 test('auth-check errors are recoverable without rendering protected content', async ({ page }) => {
+  if (process.env.PULSEDESK_E2E_PREVIEW === 'true') {
+    const now = new Date();
+    await page.clock.install({ time: now });
+    await page.clock.pauseAt(new Date(now.getTime() + 1000));
+  }
   await page.route('**/api/auth/me', (route) => route.abort());
   await page.goto('/dashboard');
+  if (process.env.PULSEDESK_E2E_PREVIEW === 'true') {
+    await expect(page.getByRole('status', { name: 'Session check' })).toContainText('Starting PulseDesk');
+    await page.clock.fastForward(75000);
+  }
   await expect(page.getByRole('alert')).toContainText('We couldn’t reach the server');
   await expect(page.locator('.app-header')).toHaveCount(0);
   await page.unroute('**/api/auth/me');

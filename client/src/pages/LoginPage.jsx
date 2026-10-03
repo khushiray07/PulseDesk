@@ -1,12 +1,13 @@
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { Activity, ShieldCheck, LoaderCircle } from 'lucide-react';
+import { Activity, ShieldCheck } from 'lucide-react';
+import SessionLoading from '../components/SessionLoading.jsx';
 import { useAuth } from '../context/auth.js';
 import { apiUrl, errorMessage } from '../services/api.js';
 
 export default function LoginPage() {
   const { user, loading, error, refresh } = useAuth();
   const [params] = useSearchParams();
-  if (loading) return <div className="auth-loading" role="status"><LoaderCircle className="spin" size={22} /> Checking your session…</div>;
+  if (loading) return <SessionLoading />;
   if (user) return <Navigate to="/dashboard" replace />;
   const loginError = params.get('error');
   return <div className="login-page"><section className="login-card" aria-labelledby="login-heading">
