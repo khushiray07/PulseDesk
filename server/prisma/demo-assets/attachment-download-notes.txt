@@ -1,0 +1,8 @@
+PulseDesk fictional attachment download investigation
+Customer: ishaan.singh@example.com
+Original document: a complete readable PDF
+Symptom: downloaded content ends before the full document is transferred
+Reproduction: attach the document, refresh the ticket, download it again
+Expected: unchanged bytes and attachment disposition
+Next step: compare upload byte count, stored byte count and downloaded byte count
+Temporary Render demo storage may lose files after restart; missing-file handling is a separate documented case.

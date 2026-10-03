@@ -1,0 +1,6 @@
+PulseDesk fictional demo console capture
+Scenario: Google callback returns to the sign-in screen
+Observed: callback redirected, then GET /api/auth/me returned 401
+Check: callback must use the frontend /api proxy and the matching browser origin
+Check: HTTPS cookie, SameSite=Lax, and trusted proxy configuration
+No OAuth code, token, cookie, client secret or customer credential is included.

@@ -130,7 +130,7 @@ SELECT to_regclass('public.sessions');
 SELECT migration_name, finished_at FROM "_prisma_migrations" ORDER BY migration_name;
 ```
 
-Seeding is **optional**, not part of deployment/startup. On a fresh assignment demo database, run the production seed command below once if sample tickets and six sample support users are wanted. The seed uses stable-ID upserts and preserves existing records, but these are demo identities/data; do not seed a real support workspace automatically. Google login creates/links the signed-in user without needing a seed.
+Seeding is **optional**, not part of normal deployment/startup. On a fresh assignment demo database, run the original production seed command below once if 30 sample tickets and six sample support users are wanted. The seed uses stable-ID upserts and preserves existing records, but these are demo identities/data; do not seed a real support workspace automatically. Google login creates/links the signed-in user without needing a seed. For the separate 60-ticket production demo with comments, assignees and real files, see [production demo fixtures](demo-seed.md). Its filesystem-backed seed must run in the serving Render instance, not on a workstation connected to Neon.
 
 Local `server/.env`, its PostgreSQL databases, local uploads, and the dedicated `_test` database remain separate. Do not import local data or run production commands with local URLs unless intentionally doing a separate migration project.
 

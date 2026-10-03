@@ -16,6 +16,7 @@
     "db:generate": "npm run db:generate -w server",
     "db:migrate": "npm run db:migrate -w server",
     "db:seed": "npm run db:seed -w server",
+    "db:seed:demo": "npm run db:seed:demo -w server --",
     "db:local": "node scripts/local-postgres.mjs start",
     "db:stop": "node scripts/local-postgres.mjs stop"
   },
