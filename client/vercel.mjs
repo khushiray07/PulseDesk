@@ -1,4 +1,4 @@
-// Vercel evaluates this at deployment time. Use Vercel CLI 54.1.0 or newer.
+// Vercel project Root Directory: client. Use Vercel CLI 54.1.0 or newer.
 // BACKEND_ORIGIN is public routing configuration, never a credential.
 const backend = new URL(process.env.BACKEND_ORIGIN || 'https://missing.invalid');
 if (!process.env.BACKEND_ORIGIN || backend.protocol !== 'https:' || backend.username || backend.password
@@ -11,7 +11,7 @@ export const config = {
   framework: 'vite',
   installCommand: 'npm ci --include=dev',
   buildCommand: 'npm run build',
-  outputDirectory: 'client/dist',
+  outputDirectory: 'dist',
   rewrites: [
     { source: '/api/:path*', destination: `${backend.origin}/api/:path*` },
     { source: '/(.*)', destination: '/index.html' },

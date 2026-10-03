@@ -1,15 +1,16 @@
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 function config(backend) {
-  return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', "console.log(JSON.stringify((await import('../vercel.mjs')).config));"], {
-    cwd: process.cwd(), env: { ...process.env, BACKEND_ORIGIN: backend }, stdio: 'pipe',
+  return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', "console.log(JSON.stringify((await import('./vercel.mjs')).config));"], {
+    cwd: fileURLToPath(new URL('../../client/', import.meta.url)), env: { ...process.env, BACKEND_ORIGIN: backend }, stdio: 'pipe',
   }).toString());
 }
 describe('production Vercel routing', () => {
   it('proxies APIs before the SPA fallback and keeps authenticated responses out of caches', () => {
     const deployment = config('https://api.example.com');
-    expect(deployment.outputDirectory).toBe('client/dist');
+    expect(deployment.outputDirectory).toBe('dist');
     expect(deployment.rewrites).toEqual([
       { source: '/api/:path*', destination: 'https://api.example.com/api/:path*' },
       { source: '/(.*)', destination: '/index.html' },

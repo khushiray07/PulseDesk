@@ -2,7 +2,7 @@
 **/.env*
 .local/
 node_modules/
-client/dist/
+dist/
 coverage/
 playwright-report/
 test-results/

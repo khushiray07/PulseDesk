@@ -11,7 +11,7 @@ Browser → https://<confirmed-vercel-domain>
                                                     → attachment adapter (temporary or private S3)
 ```
 
-The browser uses one origin. `/api` remains the frontend API base, including Google login and attachment downloads/previews. Vite's development/preview proxy is local tooling only; Vercel uses `vercel.mjs` for production routing. Its API rewrite precedes the React Router fallback, so refreshing `/dashboard` or `/tickets/<id>` loads the SPA and an API error remains an API response.
+The browser uses one origin. `/api` remains the frontend API base, including Google login and attachment downloads/previews. Vite's development/preview proxy is local tooling only; Vercel uses `client/vercel.mjs` with Root Directory `client` for production routing. Its API rewrite precedes the React Router fallback, so refreshing `/dashboard` or `/tickets/<id>` loads the SPA and an API error remains an API response.
 
 The public callback will be on the **confirmed Vercel domain**, through `/api/auth/google/callback`. Do not register a guessed Vercel name or the direct Render callback for this architecture. External rewrites preserve the browser URL; see [Vercel rewrites](https://vercel.com/docs/routing/rewrites).
 
@@ -25,13 +25,13 @@ Use the free Hobby project, import `khushiray07/PulseDesk`, branch `main`. Creat
 
 | Setting | Exact value |
 | --- | --- |
-| Root directory | Repository root (`.`; leave Root Directory empty in the UI) |
+| Root directory | `client` |
 | Framework preset | Vite |
 | Node.js version | 24.x |
 | Install command | `npm ci --include=dev` |
 | Build command | `npm run build` |
-| Output directory | `client/dist` |
-| Configuration | Repository-root `vercel.mjs` |
+| Output directory | `dist` (relative to `client`) |
+| Configuration | `client/vercel.mjs` |
 | `BACKEND_ORIGIN` | Actual HTTPS Render service origin, with no path, query, or credentials |
 | `VITE_API_BASE_URL` | `/api` |
 
@@ -39,18 +39,9 @@ Use the free Hobby project, import `khushiray07/PulseDesk`, branch `main`. Creat
 
 The Axios client, Google login link, and attachment content URLs all honor the configured base. Keep `/api` for this deployment: pointing directly to an unrelated Render origin would introduce cross-site cookies and would require a different OAuth topology. Preview deployments should use their own isolated backend/database and exact origin; do not wildcard-allow arbitrary `*.vercel.app` previews on the production backend.
 
-Use Vercel CLI 54.1.0 or newer for programmatic configuration ([official documentation](https://vercel.com/docs/project-configuration/vercel-ts)). From the repository root:
+Programmatic `vercel.mjs` is supported by Vercel ([official documentation](https://vercel.com/docs/project-configuration/vercel-ts)); local compilation requires Vercel CLI 54.1.0 or newer. This config evaluates `BACKEND_ORIGIN` in JavaScript and creates literal destination strings; static `vercel.json` does not perform JavaScript template-string interpolation. Do not add a conflicting `client/vercel.json` or root configuration.
 
-```sh
-# Public URL, available after creating the Render service; replace this placeholder.
-export BACKEND_ORIGIN='https://<actual-render-host>'
-npx --yes vercel@54.1.0 link
-npx --yes vercel@54.1.0 env add BACKEND_ORIGIN production
-npx --yes vercel@54.1.0 env add VITE_API_BASE_URL production
-npx --yes vercel@54.1.0 --prod
-```
-
-Enter the actual Render origin and `/api` at the respective prompts. The shell variable lets the CLI evaluate routing before project variables have been saved; the project variable is used by subsequent hosted builds. Confirm Root Directory/settings in Vercel before deploying. A changed environment variable needs a new deployment. `.vercelignore` excludes local secrets, attachments, dependencies, and verification artifacts from CLI uploads.
+For the current Git-imported project, use the dashboard and keep Root Directory `client`. Set `BACKEND_ORIGIN` to the actual Render HTTPS origin and `VITE_API_BASE_URL` to `/api` for Production; set them for Preview as well if testing a preview deployment with its appropriately isolated backend. Build/output paths above are relative to `client`. npm discovers the parent workspace root and uses its committed lockfile. No CLI login is required for this dashboard workflow. A changed environment variable needs a new deployment. `client/.vercelignore` excludes client environment files, dependencies and build artifacts from CLI uploads.
 
 ## Render settings
 
@@ -183,7 +174,7 @@ For the existing local client, retain `http://127.0.0.1:5173/api/auth/google/cal
 
 1. **Neon first:** sign in at [Neon Console](https://console.neon.tech), choose Free, and create `pulsedesk`. Use a region close to the intended Render service. Keep the default PostgreSQL version/database unless you have a specific reason to change them. In Connect, enable the pooled connection and copy the complete URL, including TLS parameters, privately into `DATABASE_URL` in `server/.env.production`. A blank ignored production file has been prepared from `deploy/production.env.example`; do not overwrite local `server/.env`. No CLI sign-in is needed for this dashboard workflow.
 2. **Render next:** create a Free web service from the GitHub repository, reserve its actual service URL, and configure the commands above. Set `ATTACHMENT_STORAGE_DRIVER=temporary` for the selected disposable demo and enter the Neon/auth secrets directly in its dashboard. Choose private S3-compatible storage instead if attachment durability is required. `APP_ORIGIN` and the production Google callback remain pending the confirmed Vercel URL. Initial startup may fail closed until these required settings are available; do not use guessed domains or disable authentication to make an intermediate deploy green. Render dashboard setup does not require a CLI login.
-3. **Vercel next:** create/import the Free Hobby project with the exact settings above. Set `BACKEND_ORIGIN` to Render's actual service origin and `VITE_API_BASE_URL=/api`; deploy the static frontend and record its actual stable production URL. Until Render starts successfully, its API proxy may return an upstream error. For CLI use, sign in with `npx --yes vercel@54.1.0 login`, then use the link/env/deploy commands above. The current workstation's Vercel CLI is already signed in; a PulseDesk project has not been created.
+3. **Vercel next:** create/import the Free Hobby project with Root Directory `client` and the exact settings above. Set `BACKEND_ORIGIN` to Render's actual service origin and `VITE_API_BASE_URL=/api`; deploy the static frontend and record its actual stable production URL. Until Render starts successfully, its API proxy may return an upstream error. The dashboard workflow requires no CLI login. For local CLI use, sign in with `npx --yes vercel@54.1.0 login` if needed; the current workstation's CLI is already signed in.
 4. Set Render's `APP_ORIGIN` to that observed Vercel origin, configure Google credentials and the actual public callback, and redeploy Render. Confirm direct Render `/api/health` and Vercel `/api/health` both return matching JSON, not SPA HTML. Confirm protected `/api/tickets` returns 401 without a session. Register the confirmed exact public callback in Google Cloud before testing sign-in.
 5. Verify the production login page and refresh `/dashboard` and a ticket detail route. Complete **real Google sign-in** with an authorized reviewer account. In DevTools, check `pulsedesk.sid` is host-only, HttpOnly, Secure, SameSite=Lax; confirm authenticated responses are not cached.
 6. Verify ticket listing, `pasword` fuzzy search, status/priority filters, date sorting, pagination/counts, and filter persistence after refresh.
