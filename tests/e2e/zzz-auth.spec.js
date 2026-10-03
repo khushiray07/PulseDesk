@@ -9,7 +9,7 @@ async function signIn(page) {
 
 test('logged-out users see login and protected dashboard/detail routes redirect', async ({ page }) => {
   await page.goto('/login');
-  await expect(page.getByRole('heading', { name: 'PulseDesk.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'PulseDesk', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Continue with Google' })).toHaveAttribute('href', '/api/auth/google');
   for (const path of ['/dashboard', '/tickets/00000000-0000-4000-8000-000000000000']) {
     await page.goto(path);
