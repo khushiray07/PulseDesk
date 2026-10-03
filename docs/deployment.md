@@ -11,7 +11,7 @@ Browser → https://<confirmed-vercel-domain>
                                                     → attachment adapter (temporary or private S3)
 ```
 
-The browser uses one origin. `/api` remains the frontend API base, including Google login and attachment downloads/previews. Vite's development/preview proxy is local tooling only; Vercel uses `client/vercel.mjs` with Root Directory `client` for production routing. Its API rewrite precedes the React Router fallback, so refreshing `/dashboard` or `/tickets/<id>` loads the SPA and an API error remains an API response.
+The browser uses one origin. `/api` remains the frontend API base, including Google login and attachment downloads/previews. Vite's development/preview proxy is local tooling only; Vercel uses the static `client/vercel.json` with Root Directory `client` and generates routing through its Build Output API. The API proxy precedes static-file handling and the React Router fallback, so refreshing `/dashboard` or `/tickets/<id>` loads the SPA and an API error remains an API response.
 
 The public callback will be on the **confirmed Vercel domain**, through `/api/auth/google/callback`. Do not register a guessed Vercel name or the direct Render callback for this architecture. External rewrites preserve the browser URL; see [Vercel rewrites](https://vercel.com/docs/routing/rewrites).
 
@@ -26,22 +26,22 @@ Use the free Hobby project, import `khushiray07/PulseDesk`, branch `main`. Creat
 | Setting | Exact value |
 | --- | --- |
 | Root directory | `client` |
-| Framework preset | Vite |
+| Framework preset | Other (`framework: null`); the build still uses Vite |
 | Node.js version | 24.x |
 | Install command | `npm ci --include=dev` |
-| Build command | `npm run build` |
-| Output directory | `dist` (relative to `client`) |
-| Configuration | `client/vercel.mjs` |
+| Build command | `npm run build:vercel` |
+| Output directory | Leave override disabled; Build Output API uses `.vercel/output` automatically |
+| Configuration | Static `client/vercel.json`; generated `client/.vercel/output/config.json` |
 | `BACKEND_ORIGIN` | Actual HTTPS Render service origin, with no path, query, or credentials |
 | `VITE_API_BASE_URL` | `/api` |
 
-`BACKEND_ORIGIN` is evaluated by the deployment configuration; it is not a browser credential. Configuration fails if it is absent, insecure, or points to localhost. `VITE_API_BASE_URL` is public and bundled into browser JavaScript. Only these public routing values belong in the Vercel project. Database URLs, Google secrets, and session secrets belong on Render.
+`BACKEND_ORIGIN` is evaluated by `client/scripts/build-vercel.mjs` during the build, not during New Project import; it is not a browser credential. The build fails if it is absent, insecure, or points to localhost. `VITE_API_BASE_URL` is public and bundled into browser JavaScript. Only these public routing values belong in the Vercel project. Database URLs, Google secrets, and session secrets belong on Render.
 
 The Axios client, Google login link, and attachment content URLs all honor the configured base. Keep `/api` for this deployment: pointing directly to an unrelated Render origin would introduce cross-site cookies and would require a different OAuth topology. Preview deployments should use their own isolated backend/database and exact origin; do not wildcard-allow arbitrary `*.vercel.app` previews on the production backend.
 
-Programmatic `vercel.mjs` is supported by Vercel ([official documentation](https://vercel.com/docs/project-configuration/vercel-ts)); local compilation requires Vercel CLI 54.1.0 or newer. This config evaluates `BACKEND_ORIGIN` in JavaScript and creates literal destination strings; static `vercel.json` does not perform JavaScript template-string interpolation. Do not add a conflicting `client/vercel.json` or root configuration.
+New Project import continued rejecting the programmatic configuration even after moving it into `client`; successful local compilation did not verify the hosted import path. The replacement is a static `client/vercel.json` containing only build settings, with no import-time rewrites or environment evaluation. `build:vercel` runs the normal Vite production build, then reads `BACKEND_ORIGIN`, copies only `dist` into `.vercel/output/static`, and emits version-3 routing in `.vercel/output/config.json`. This is the documented [Build Output API](https://vercel.com/docs/build-output-api). Its low-level routes use `src` and `dest`; API proxy destinations are concrete HTTPS strings. Static assets are handled before the SPA fallback. Do not add a competing `vercel.mjs`, root config or a build step that rewrites `vercel.json` after import.
 
-For the current Git-imported project, use the dashboard and keep Root Directory `client`. Set `BACKEND_ORIGIN` to the actual Render HTTPS origin and `VITE_API_BASE_URL` to `/api` for Production; set them for Preview as well if testing a preview deployment with its appropriately isolated backend. Build/output paths above are relative to `client`. npm discovers the parent workspace root and uses its committed lockfile. No CLI login is required for this dashboard workflow. A changed environment variable needs a new deployment. `client/.vercelignore` excludes client environment files, dependencies and build artifacts from CLI uploads.
+For the current Git-imported project, use the dashboard and keep Root Directory `client`. Select Other, use `npm run build:vercel`, and disable the previous `dist`/`client/dist` Output Directory override. Set `BACKEND_ORIGIN` to the actual Render HTTPS origin and `VITE_API_BASE_URL` to `/api` for Production; set them for Preview as well if testing a preview deployment with its appropriately isolated backend. npm discovers the parent workspace root and uses its committed lockfile. No CLI login is required for this dashboard workflow. A changed environment variable needs a new deployment. `client/.vercelignore` excludes client environment files, dependencies and build artifacts from CLI uploads. Ordinary `npm run build`, `npm run dev`, and the local Vite proxy remain unchanged.
 
 ## Render settings
 
