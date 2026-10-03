@@ -1,15 +1,16 @@
 import { mkdir, writeFile, readFile, unlink } from 'node:fs/promises';
-import { isAbsolute, resolve } from 'node:path';
+import { isAbsolute, join, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 const defaultDirectory = fileURLToPath(new URL('../../../.local/attachments/', import.meta.url));
 const driver = process.env.ATTACHMENT_STORAGE_DRIVER || 'local';
-if (!['local', 's3'].includes(driver)) throw new Error('ATTACHMENT_STORAGE_DRIVER must be local or s3.');
+if (!['local', 'temporary', 's3'].includes(driver)) throw new Error('ATTACHMENT_STORAGE_DRIVER must be local, temporary or s3.');
 if (driver === 'local' && process.env.NODE_ENV === 'production' && !isAbsolute(process.env.ATTACHMENT_STORAGE_DIR || '')) {
   throw new Error('Production requires an absolute ATTACHMENT_STORAGE_DIR on persistent storage.');
 }
-const directory = resolve(process.env.ATTACHMENT_STORAGE_DIR || defaultDirectory);
+const directory = resolve(process.env.ATTACHMENT_STORAGE_DIR || (driver === 'temporary' ? join(tmpdir(), 'pulsedesk-attachments') : defaultDirectory));
 const validateKey = (key) => {
   if (!/^[0-9a-f-]{36}\.(png|jpg|webp|pdf|txt)$/.test(key)) throw new Error('Invalid internal storage key.');
   return key;

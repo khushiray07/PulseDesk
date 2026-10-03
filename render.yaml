@@ -1,4 +1,5 @@
-# Free Render backend; object-storage/Neon credentials are entered in its dashboard.
+# Free Render backend with explicitly temporary attachments; files may be lost on restart.
+# Neon/auth credentials are entered in its dashboard. Switch to s3 for durable files.
 services:
   - type: web
     name: pulsedesk-api
@@ -20,11 +21,7 @@ services:
       - key: TRUST_PROXY
         value: "1"
       - key: ATTACHMENT_STORAGE_DRIVER
-        value: s3
-      - key: S3_REGION
-        value: auto
-      - key: S3_FORCE_PATH_STYLE
-        value: "true"
+        value: temporary
       - key: SESSION_SECRET
         generateValue: true
       - key: DATABASE_URL
@@ -36,12 +33,4 @@ services:
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
-        sync: false
-      - key: S3_ENDPOINT
-        sync: false
-      - key: S3_BUCKET
-        sync: false
-      - key: S3_ACCESS_KEY_ID
-        sync: false
-      - key: S3_SECRET_ACCESS_KEY
         sync: false

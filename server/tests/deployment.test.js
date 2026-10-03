@@ -63,7 +63,41 @@ describe('deployment transport', () => {
   });
   it.each(['', 'relative/uploads'])('refuses unconfigured production attachment storage: %j', (directory) => {
     expect(() => execFileSync(process.execPath, ['--input-type=module', '-e', "await import('./src/services/attachment-storage.js');"], {
-      cwd: process.cwd(), env: { ...process.env, NODE_ENV: 'production', ATTACHMENT_STORAGE_DIR: directory }, stdio: 'pipe',
+      cwd: process.cwd(), env: { ...process.env, NODE_ENV: 'production', ATTACHMENT_STORAGE_DRIVER: 'local', ATTACHMENT_STORAGE_DIR: directory }, stdio: 'pipe',
     })).toThrow();
+  });
+  it('explicit temporary production storage works without S3 credentials and handles lost files', () => {
+    const source = `
+      const { randomUUID } = await import('node:crypto');
+      const { readFile, unlink } = await import('node:fs/promises');
+      const { join } = await import('node:path');
+      const { tmpdir } = await import('node:os');
+      const { default: assert } = await import('node:assert/strict');
+      const { attachmentStorage } = await import('./src/services/attachment-storage.js');
+      const key = randomUUID() + '.txt';
+      const path = join(tmpdir(), 'pulsedesk-attachments', key);
+      const bytes = Buffer.from('Temporary support attachment');
+      try {
+        await attachmentStorage.write(key, bytes);
+        assert.deepEqual(await readFile(path), bytes);
+        await assert.rejects(attachmentStorage.write(key, bytes), { code: 'EEXIST' });
+        const { attachmentStorage: restarted } = await import('./src/services/attachment-storage.js?new-instance');
+        assert.deepEqual(await restarted.read(key), bytes);
+        await unlink(path); // Simulate Render losing its ephemeral files.
+        await assert.rejects(restarted.read(key), { code: 'ENOENT' });
+        await restarted.remove(key); // Missing bytes must not prevent metadata deletion.
+        await attachmentStorage.write(key, bytes);
+        await attachmentStorage.remove(key);
+        await assert.rejects(attachmentStorage.read(key), { code: 'ENOENT' });
+        console.log('temporary-storage-verified');
+      } finally {
+        await attachmentStorage.remove(key);
+      }
+    `;
+    const output = execFileSync(process.execPath, ['--input-type=module', '-e', source], {
+      cwd: process.cwd(), env: { ...process.env, NODE_ENV: 'production', ATTACHMENT_STORAGE_DRIVER: 'temporary',
+        ATTACHMENT_STORAGE_DIR: '', S3_ENDPOINT: '', S3_REGION: '', S3_BUCKET: '', S3_ACCESS_KEY_ID: '', S3_SECRET_ACCESS_KEY: '' }, stdio: 'pipe',
+    }).toString();
+    expect(output.trim()).toBe('temporary-storage-verified');
   });
 });

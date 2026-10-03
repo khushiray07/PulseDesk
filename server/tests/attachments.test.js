@@ -94,6 +94,19 @@ describe('ticket attachment API', () => {
     expect((await request(app).delete(url)).status).toBe(404);
   });
 
+  it('returns a safe missing-file response and allows deletion after temporary bytes are lost', async () => {
+    const uploaded = await upload();
+    expect(uploaded.status).toBe(201);
+    await rm(process.env.ATTACHMENT_STORAGE_DIR, { recursive: true, force: true });
+    const url = `${endpoint()}/${uploaded.body.data.id}`;
+    const missing = await request(app).get(`${url}/content`);
+    expect(missing.status).toBe(404);
+    expect(missing.body.error.code).toBe('ATTACHMENT_FILE_MISSING');
+    expect((await request(app).get(endpoint())).body.data).toEqual([uploaded.body.data]);
+    expect((await request(app).delete(url)).status).toBe(200);
+    expect(await prisma.attachment.count()).toBe(0);
+  });
+
   it('allows multiple files but enforces the per-ticket cap under concurrent uploads', async () => {
     const responses = await Promise.all(Array.from({ length: 11 }, (_, i) => upload(png, `${i}.png`)));
     expect(responses.filter((response) => response.status === 201)).toHaveLength(10);
