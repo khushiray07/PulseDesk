@@ -57,14 +57,6 @@ The misspelled query `pasword` finds a password-reset ticket while status, prior
 
 ![PulseDesk Google sign-in screen](screenshots/login.png)
 
-## Demo
-
-A short demonstration video covering the complete ticket workflow can be added here:
-
-[Watch the PulseDesk demo](ADD_DEMO_LINK_HERE)
-
-**Before submission:** replace `ADD_DEMO_LINK_HERE` with your Loom or Google Drive video URL and verify that reviewers can access it.
-
 ## Quick start
 
 Prerequisites: Node.js 24 LTS (or Node.js 22.12+), npm, and either PostgreSQL command-line tools or Docker with its daemon running. Google Chrome is needed only for browser tests.
@@ -348,7 +340,7 @@ Fuzzy search, attachments, rich-text editing, multiple assignees, internal comme
 - Creating a ticket opens its detail page so it can be found even when active queue filters would exclude it. Returning restores the previous queue query and refreshes its data.
 - Timestamps are stored with timezone support and displayed in the browser's local timezone. Seed dates are relative to the first seed run and remain stable on subsequent runs.
 - The small Needs Attention dot is derived from HIGH priority and OPEN status; it is not a stored field or an additional query mode.
-- Gmail integration, notifications, analytics, audit history, ticket deletion, and deployment remain outside this enhancement's scope.
+- Gmail integration, notifications, analytics, audit history, and ticket deletion remain outside the implemented scope.
 - Concurrent edits use last-write-wins behavior. There is no real-time synchronization or optimistic concurrency control.
 - Querying uses exact, substring, and trigram matching with offset pagination, which suit the assignment dataset; large datasets would need separate performance work.
 - The native PostgreSQL path was verified with PostgreSQL 14.17 on macOS. Docker Compose is provided as an alternative; Docker startup was not verified here because its daemon was unavailable.
@@ -361,13 +353,11 @@ The architecture, implementation decisions, integrations, and final code were re
 
 ## Time spent
 
-Core assignment implementation: approximately **X hours**.
+Core assignment implementation: approximately `<CORE_HOURS>` hours.
 
-Optional enhancements and additional testing: approximately **Y hours**.
+Optional enhancements, deployment, and additional testing: approximately `<ENHANCEMENT_HOURS>` hours.
 
-**Before submission:** replace `X` and `Y` with truthful values based on your own time records. These placeholders are not estimates.
-
-The original 4–6 hour assignment window was used to prioritize the required ticket-management workflow first. Additional enhancements such as fuzzy search, attachments, rich-text descriptions, collaboration features, and Google authentication were implemented afterward.
+The original 4–6 hour assignment window was used to prioritize the required ticket-management workflow first. Additional enhancements such as fuzzy search, attachments, rich-text descriptions, collaboration features, Google authentication, deployment work, and extended testing were completed afterward.
 
 ## Project references
 
@@ -384,6 +374,5 @@ Requirements: [PRD](docs/PulseDesk_PRD.pdf). Architecture: [architecture.md](doc
 - [x] Technical choices
 - [x] Assumptions
 - [x] Known limitations
-- [ ] Final time-spent values reviewed
-- [ ] Demo video link added
 - [x] Screenshots included
+- [ ] Final time-spent values reviewed
